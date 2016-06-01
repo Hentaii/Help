@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Help</string>
+    <string name="app_name">云互救</string>
+    <string name="previous_page">上一页</string>
+    <string name="start">现在开始体验</string>
+    <string name="set_connect">设置联系人</string>
+    <string name="set_connect_over">设置联系人完成以后</string>
 </resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.UseHelpActivity">
+
+    <include layout="@layout/view_toolbar"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_previous"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorOranger_ffA042"
+            android:gravity="center"
+            android:text="@string/previous_page"
+            android:textColor="@color/colorWhite_ffffff"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0.5dp"
+            android:layout_weight="1"
+            android:background="@color/colorOranger_ffA042"
+            android:gravity="center"
+            android:text="下一页"
+            android:textColor="@color/colorWhite_ffffff"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_start"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorOranger_ffA042"
+            android:gravity="center"
+            android:text="@string/start"
+            android:textColor="@color/colorWhite_ffffff"
+            android:textSize="18sp"/>
+    </LinearLayout>
+</LinearLayout>
