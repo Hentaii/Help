@@ -12,10 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-        <ImageView
-            android:src="@drawable/ic_back"
-            android:layout_width="28dp"
-            android:layout_height="28dp"/>
         <TextView
             android:textColor="@color/colorBlack_000000"
             android:layout_marginLeft="15dp"

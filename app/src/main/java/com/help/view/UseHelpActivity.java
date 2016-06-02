@@ -1,21 +1,23 @@
 package com.help.view;
 
-import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.help.R;
+import com.help.util.Util;
 
 import java.util.ArrayList;
 
 
-public class UseHelpActivity extends Activity implements View.OnClickListener {
+public class UseHelpActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private View view1, view2, view3, view4, view5;
     private ArrayList<View> views;
@@ -24,6 +26,7 @@ public class UseHelpActivity extends Activity implements View.OnClickListener {
     private ImageView mIvAnim;
     public static int curPosition;
     private AnimationDrawable drawable;
+    private Toolbar mToolbar;
 
 
     @Override
@@ -37,6 +40,9 @@ public class UseHelpActivity extends Activity implements View.OnClickListener {
 
     private void initView() {
         setContentView(R.layout.activity_use_help);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        setSupportActionBar(mToolbar);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         LayoutInflater mLi = LayoutInflater.from(this);
         view1 = mLi.inflate(R.layout.use_help_view1, null);
@@ -107,6 +113,14 @@ public class UseHelpActivity extends Activity implements View.OnClickListener {
     private void initListener() {
         mTvNext.setOnClickListener(this);
         mTvPrevious.setOnClickListener(this);
+        mTvStart.setOnClickListener(this);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Util.Toast(UseHelpActivity.this, "123");
+            }
+        });
 
 
     }

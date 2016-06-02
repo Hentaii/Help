@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <ImageView
-        android:layout_margin="50dp"
-        android:id="@+id/iv_anim"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="@string/ues_help_7"
+        android:textColor="@color/colorBlack_000000"
+        android:textSize="16sp"/>
+
+
+    <ImageView
+        android:id="@+id/iv_anim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="60dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp"
+        android:text="@string/ues_help_8"
+        android:textColor="@color/colorBlack_000000"/>
+
+</RelativeLayout>
