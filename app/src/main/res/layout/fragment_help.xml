@@ -29,18 +29,9 @@
             android:text="千喜鹤"
             android:textSize="12sp"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_set"/>
+
 
     </RelativeLayout>
 
-    <com.help.widge.CircleButtonWithProgerss
-        android:id="@+id/bt_help"
-        android:layout_width="200dp"
-        android:layout_height="200dp"/>
+
 </LinearLayout>
