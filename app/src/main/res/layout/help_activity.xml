@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="求救"
+            android:textColor="@color/colorWhite_ffffff"
+            android:id="@+id/tv_tb_left"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/used_1"/>
+
+        <TextView
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack_000000"
+            android:text="周边"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/tv_tb_left"
+            android:id="@+id/tv_tb_right"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/unuse_1"/>
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_marginTop="1dp"
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
