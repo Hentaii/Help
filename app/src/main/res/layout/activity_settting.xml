@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_background"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary_Blue_4EA2F8">
+
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="6dp"
+                android:src="@mipmap/icon_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tb_setting"
+                android:textColor="@color/white_background"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+    <RelativeLayout
+        android:id="@+id/rl_quick_help"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white_background"
+        android:gravity="center_vertical">
+        <TextView
+            android:text="@string/is_quick_help"
+            android:layout_marginLeft="18dp"
+            android:textSize="20sp"
+            android:textColor="@color/bottom_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Switch
+            android:id="@+id/sth_help"
+            android:focusable="false"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_instruction"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white_background"
+        android:gravity="center_vertical">
+        <TextView
+            android:text="@string/use_instruction"
+            android:layout_marginLeft="18dp"
+            android:textSize="20sp"
+            android:textColor="@color/bottom_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/icon_right"
+            android:layout_marginRight="18dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/rl_share"
+        android:background="@color/white_background"
+        android:gravity="center_vertical">
+        <TextView
+            android:text="@string/share_app"
+            android:layout_marginLeft="18dp"
+            android:textSize="20sp"
+            android:textColor="@color/bottom_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/icon_right"
+            android:layout_marginRight="18dp"/>
+    </RelativeLayout>
+
+</LinearLayout>
