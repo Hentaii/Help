@@ -121,6 +121,9 @@ public class CircleButtonWithProgerss extends View {
                 startCustomAnimation();
                 break;
             case MotionEvent.ACTION_UP:
+                if (!onTouch){
+                    return true;
+                }
                 onTouch = false;
                 clearAnimation();
                 rotateyAnimRun(this);
@@ -155,6 +158,7 @@ public class CircleButtonWithProgerss extends View {
                 time = interpolatedTime;
             }
             if (interpolatedTime == 1.0f) {
+                onTouch = false;
                 mSweepAnglePer = mSweepAngle;
                 if (choseListener != null) {
                     choseListener.onChose();

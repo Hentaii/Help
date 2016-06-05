@@ -4,35 +4,51 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <RelativeLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/older_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="?attr/actionBarSize"
+        android:background="#bababa">
+
 
         <TextView
-            android:textSize="16sp"
+            android:id="@+id/tv_tb_left"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/used_1"
             android:gravity="center"
             android:text="求救"
             android:textColor="@color/colorWhite_ffffff"
-            android:id="@+id/tv_tb_left"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/used_1"/>
+            android:textSize="16sp"/>
 
         <TextView
-            android:textSize="16sp"
-            android:textColor="@color/colorBlack_000000"
-            android:text="周边"
-            android:gravity="center"
-            android:layout_toRightOf="@+id/tv_tb_left"
             android:id="@+id/tv_tb_right"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/unuse_1"/>
-    </RelativeLayout>
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_toRightOf="@+id/tv_tb_left"
+            android:background="@drawable/unuse_1"
+            android:gravity="center"
+            android:text="周边"
+            android:textColor="@color/colorBlack_000000"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:layout_gravity="right"
+            android:layout_marginRight="12dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:padding="3dp"
+            android:src="@drawable/ic_set"/>
+
+    </android.support.v7.widget.Toolbar>
+
     <FrameLayout
-        android:layout_marginTop="1dp"
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp"/>
 
 </LinearLayout>
