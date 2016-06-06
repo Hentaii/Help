@@ -198,7 +198,7 @@
         <EditText
             android:id="@+id/et_sms"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="150dp"
             android:layout_marginBottom="12dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -209,6 +209,16 @@
             android:paddingRight="4dp"
             android:paddingTop="4dp"
             android:text="@string/example_sms" />
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:id="@+id/tv_delete"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textColor="@color/colorWhite_ffffff"
+            android:background="@mipmap/back_delete"
+            android:text="@string/delete"/>
+
 
     </LinearLayout>
 </LinearLayout>

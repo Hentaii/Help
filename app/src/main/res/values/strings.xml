@@ -28,10 +28,11 @@
     <string name="name">姓名：</string>
     <string name="spark_model">触发方式：</string>
     <string name="sms">短信</string>
-    <string name="example_sms">您好，我现在可能遇到了危险,</string>
+    <string name="example_sms">您好，我现在可能遇到了危险,现在不方便打电话，如果10分钟内我没联系你，请你帮助我！</string>
     <string name="tb_setting">设置</string>
     <string name="is_quick_help">开启快捷求救</string>
     <string name="use_instruction">使用帮助</string>
     <string name="share_app">分享应用</string>
     <string name="head">头像：</string>
+    <string name="delete">删除</string>
 </resources>

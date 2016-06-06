@@ -6,17 +6,34 @@ import org.litepal.crud.DataSupport;
  * Created by KiSoo on 2016/6/5.
  */
 public class HelpContact extends DataSupport{
-    private int tel;
+    private String tel;
     private String name;
     private String smsText;
     private boolean sms;
     private String head;
+    private int contactNo;
 
-    public int getTel() {
+    public int getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(int contactNo) {
+        this.contactNo = contactNo;
+    }
+
+    public int getNo() {
+        return contactNo;
+    }
+
+    public void setNo(int no) {
+        this.contactNo = no;
+    }
+
+    public String getTel() {
         return tel;
     }
 
-    public void setTel(int tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 
