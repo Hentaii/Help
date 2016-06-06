@@ -8,7 +8,7 @@
         android:id="@+id/older_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#bababa">
+        android:background="@color/colorPrimary_Blue_4EA2F8">
 
 
         <TextView
@@ -32,7 +32,7 @@
             android:background="@drawable/unuse_1"
             android:gravity="center"
             android:text="周边"
-            android:textColor="@color/colorBlack_000000"
+            android:textColor="@color/colorPrimary_Blue_4EA2F8"
             android:textSize="16sp"/>
 
         <ImageView
@@ -48,7 +48,6 @@
     <FrameLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="1dp"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

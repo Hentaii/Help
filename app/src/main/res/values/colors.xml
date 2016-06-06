@@ -9,6 +9,8 @@
     <color name="colorOranger_834219">#834219</color>
     <color name="colorRed_FF0000">#FF0000</color>
     <color name="colorPrimary_Blue_4EA2F8">#4EA2F8</color>
+    <color name="colorRippleGray">#99FFFFFF</color>
+
 
     <color name="fragment_background">#F7F7F7</color>
     <color name="vehicle_information_choose_vehicle_text_color">#FFFFFF</color>
