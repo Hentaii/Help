@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.help.R;
 import com.help.util.Util;
 import com.help.widge.CircleButtonWithProgerss;
@@ -16,21 +19,35 @@ import com.help.widge.CircleButtonWithProgerss;
  * Created by gan on 2016/6/3.
  */
 public class HelpFragment extends Fragment {
-    private CircleButtonWithProgerss mBtHelp;
+    private FloatingActionMenu mFbMenu;
+    private FloatingActionButton mFbAdd;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_help, container, false);
-        mBtHelp = (CircleButtonWithProgerss) view.findViewById(R.id.bt_help);
-        mBtHelp.setSweepAngle(360);
-        mBtHelp.setOnChoseListener(new CircleButtonWithProgerss.OnChoseListener() {
+        mFbMenu = (FloatingActionMenu) view.findViewById(R.id.fb_menu);
+        mFbAdd = (FloatingActionButton) view.findViewById(R.id.fb_add);
+        mFbAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChose() {
-                Util.Toast(getActivity(), "1231223123123213213");
+            public void onClick(View v) {
+                if (mFbMenu.getChildCount() < 6) {
+                    addContect(mFbMenu);
+                } else {
+                    Util.Toast(getActivity(), "人数已满");
+                }
             }
         });
-
         return view;
+    }
+
+    private void addContect(FloatingActionMenu mFbMenu) {
+        FloatingActionButton fb = new FloatingActionButton(getActivity());
+        fb.setColorNormal(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
+        fb.setColorPressed(getResources().getColor(R.color.colorPrimary));
+        fb.setColorRipple(getResources().getColor(R.color.colorRippleGray));
+        fb.setButtonSize(FloatingActionButton.SIZE_MINI);
+        mFbMenu.addMenuButton(fb);
+
     }
 }

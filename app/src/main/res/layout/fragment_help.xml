@@ -1,34 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+              xmlns:fab="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorWhite_ffffff"
+              android:orientation="vertical">
 
     <RelativeLayout
-        android:background="@color/colorPrimary_Blue_4EA2F8"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary_Blue_4EA2F8"
         android:orientation="horizontal">
 
         <TextView
-            android:textColor="@color/colorWhite_ffffff"
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
             android:text="当前位置为："
+            android:textColor="@color/colorWhite_ffffff"
             android:textSize="16sp"/>
 
         <TextView
-            android:textColor="@color/colorWhite_ffffff"
             android:id="@+id/tv_positon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/text"
             android:gravity="center_vertical"
             android:text="千喜鹤"
+            android:textColor="@color/colorWhite_ffffff"
             android:textSize="12sp"/>
 
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.help.widge.CircleButtonWithProgerss
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"/>
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/fb_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            fab:fabSize="normal"
+            fab:menu_colorNormal="@color/colorPrimary_Blue_4EA2F8"
+            fab:menu_colorPressed="@color/colorPrimary"
+            fab:menu_colorRipple="#99FFFFFF"
+            fab:menu_icon="@mipmap/up">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fb_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/add"
+                fab:fab_colorNormal="@color/colorPrimary_Blue_4EA2F8"
+                fab:fab_colorPressed="@color/colorPrimary"
+                fab:fab_colorRipple="#99FFFFFF"
+                fab:fab_size="mini"/>
+
+        </com.github.clans.fab.FloatingActionMenu>
 
 
     </RelativeLayout>
