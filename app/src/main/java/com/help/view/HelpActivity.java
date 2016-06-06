@@ -12,8 +12,12 @@ import android.widget.TextView;
 
 import com.help.R;
 import com.help.api.API;
+import com.help.app.APP;
 import com.help.app.BaseActivity;
+import com.help.model.bean.HelpContact;
 import com.help.util.Util;
+
+import org.litepal.crud.DataSupport;
 
 public class HelpActivity extends BaseActivity implements View.OnClickListener {
     private TextView mTvTabHelp;
@@ -25,6 +29,7 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        APP.contacts = DataSupport.findAll(HelpContact.class);
         initView();
         initFragment();
     }
@@ -110,5 +115,12 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
         }
         // 事务提交
         transaction.commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DataSupport.deleteAll(HelpContact.class);
+        DataSupport.saveAll(APP.contacts);
     }
 }
