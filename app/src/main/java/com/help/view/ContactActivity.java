@@ -45,7 +45,6 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        APP.contacts = DataSupport.findAll(HelpContact.class);
         initViews();
         initData();
         initListener();
