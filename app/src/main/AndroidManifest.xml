@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.help"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.help">
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".app.APP"
@@ -11,21 +13,17 @@
         android:theme="@style/myAppTheme">
         <activity android:name=".view.SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.HelpActivity">
-        </activity>
-        <activity android:name=".app.BaseActivity">
-        </activity>
-        <activity
-            android:name=".view.UseHelpActivity">
-        </activity>
-        <activity android:name=".view.GuideActivity">
-        </activity>
+        <activity android:name=".view.HelpActivity"></activity>
+        <activity android:name=".app.BaseActivity"></activity>
+        <activity android:name=".view.UseHelpActivity"></activity>
+        <activity android:name=".view.GuideActivity"></activity>
+        <activity android:name=".view.ContactActivity" />
+        <activity android:name=".view.SettingActivity" />
     </application>
 
 </manifest>

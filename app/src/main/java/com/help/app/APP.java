@@ -39,6 +39,7 @@ public class APP extends LitePalApplication {
                 .setEnableCamera(true)//开启相机功能
                 .setEnableEdit(true)//开启编辑功能
                 .setEnableRotate(true)//开启选择功能
+                .setEnableCrop(true)//开启裁剪功能
                 .setEnablePreview(true)//开启预览功能
                 .build();
         /**设置核心配置信息**/

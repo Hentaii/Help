@@ -96,6 +96,8 @@ public class ContactActivityPresenter {
 
     public void analysis(Intent data) {
         //解析
+        if (data == null)
+            return;
         ContentResolver reContentResolverol = context.getContentResolver();
         Uri contactData = data.getData();
         Cursor cursor = reContentResolverol.query(contactData, null, null, null, null);
@@ -107,14 +109,8 @@ public class ContactActivityPresenter {
                 ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId,
                 null,
                 null);
-        Log.e("--->","1");
+        Log.e("--->", "1");
         phone.moveToFirst();
-        while (phone.moveToNext()) {
-            Log.e("--->","2");
-            view.setTel(phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-            Log.e("--->",phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)+"");
-            Log.e("--->",phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-        }
-
+        view.setTel(phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
     }
 }

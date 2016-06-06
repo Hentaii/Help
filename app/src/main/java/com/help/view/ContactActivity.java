@@ -17,11 +17,8 @@ import com.help.api.API;
 import com.help.app.APP;
 import com.help.app.BaseActivity;
 import com.help.config.IContactActivityView;
-import com.help.model.bean.HelpContact;
 import com.help.presenter.ContactActivityPresenter;
 import com.squareup.picasso.Picasso;
-
-import org.litepal.crud.DataSupport;
 
 import java.io.File;
 
