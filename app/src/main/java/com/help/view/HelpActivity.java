@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.help.R;
@@ -24,6 +25,7 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     private TextView mTvTabMap;
     private HelpFragment mFgHelp;
     private MapFragment mFgMap;
+    private ImageView mIvSet;
     private SharedPreferences sp;
 
     @Override
@@ -48,8 +50,10 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.help_activity);
         mTvTabHelp = (TextView) findViewById(R.id.tv_tb_left);
         mTvTabMap = (TextView) findViewById(R.id.tv_tb_right);
+        mIvSet = (ImageView) findViewById(R.id.iv_set);
         mTvTabHelp.setOnClickListener(this);
         mTvTabMap.setOnClickListener(this);
+        mIvSet.setOnClickListener(this);
         isFirst();
     }
 
@@ -91,10 +95,14 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.tv_tb_left:
-                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.used_1));
-                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.unuse_1));
-                mTvTabHelp.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
-                mTvTabMap.setTextColor(getResources().getColor(R.color.colorBlack_000000));
+                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.unused));
+                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.used));
+                mTvTabHelp.setTextColor(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
+                mTvTabMap.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
+//                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.used_1));
+//                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.unuse_1));
+//                mTvTabHelp.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
+//                mTvTabMap.setTextColor(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
                 if (mFgHelp == null) {
                     mFgHelp = new HelpFragment();
                 }
@@ -103,14 +111,21 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.tv_tb_right:
 
-                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.unused));
-                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.used));
-                mTvTabHelp.setTextColor(getResources().getColor(R.color.colorBlack_000000));
-                mTvTabMap.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
+//                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.unused));
+//                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.used));
+                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.used_1));
+                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.unuse_1));
+//                mTvTabHelp.setTextColor(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
+//                mTvTabMap.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
+                mTvTabHelp.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
+                mTvTabMap.setTextColor(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
                 if (mFgMap == null) {
                     mFgMap = new MapFragment();
                 }
                 transaction.replace(R.id.fl_content, mFgMap);
+                break;
+            case R.id.iv_set:
+                startActivity(new Intent(HelpActivity.this, SettingActivity.class));
                 break;
         }
         // 事务提交

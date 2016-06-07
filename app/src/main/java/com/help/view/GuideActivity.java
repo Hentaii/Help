@@ -13,10 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.help.R;
+import com.help.app.BaseActivity;
 
 import java.util.ArrayList;
 
-public class GuideActivity extends AppCompatActivity {
+public class GuideActivity extends BaseActivity {
     //定义ViewPager对象
     private ViewPager viewPager;
 

@@ -17,10 +17,10 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/used_1"
+            android:background="@drawable/unused"
             android:gravity="center"
             android:text="求救"
-            android:textColor="@color/colorWhite_ffffff"
+            android:textColor="@color/colorPrimary_Blue_4EA2F8"
             android:textSize="16sp"/>
 
         <TextView
@@ -29,17 +29,18 @@
             android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
             android:layout_toRightOf="@+id/tv_tb_left"
-            android:background="@drawable/unuse_1"
+            android:background="@drawable/used"
             android:gravity="center"
             android:text="周边"
-            android:textColor="@color/colorPrimary_Blue_4EA2F8"
+            android:textColor="@color/colorWhite_ffffff"
             android:textSize="16sp"/>
 
         <ImageView
-            android:layout_gravity="right"
-            android:layout_marginRight="12dp"
+            android:id="@+id/iv_set"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="12dp"
             android:padding="3dp"
             android:src="@drawable/ic_set"/>
 

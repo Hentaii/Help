@@ -21,13 +21,18 @@ import com.help.widge.CircleButtonWithProgerss;
 public class HelpFragment extends Fragment {
     private FloatingActionMenu mFbMenu;
     private FloatingActionButton mFbAdd;
+    private View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_help, container, false);
-        mFbMenu = (FloatingActionMenu) view.findViewById(R.id.fb_menu);
-        mFbAdd = (FloatingActionButton) view.findViewById(R.id.fb_add);
+        view = inflater.inflate(R.layout.fragment_help, container, false);
+        initView();
+        initListener();
+        return view;
+    }
+
+    private void initListener() {
         mFbAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +43,11 @@ public class HelpFragment extends Fragment {
                 }
             }
         });
-        return view;
+    }
+
+    private void initView() {
+        mFbMenu = (FloatingActionMenu) view.findViewById(R.id.fb_menu);
+        mFbAdd = (FloatingActionButton) view.findViewById(R.id.fb_add);
     }
 
     private void addContect(FloatingActionMenu mFbMenu) {

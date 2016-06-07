@@ -17,10 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
@@ -29,5 +30,5 @@ dependencies {
     compile 'com.github.clans:fab:1.6.4'
     compile 'cn.finalteam:galleryfinal:1.4.8.7'
     compile 'com.squareup.picasso:picasso:2.5.2'
-
+    compile files('libs/AMap3DMap_3.3.2_AMapSearch_3.2.1_AMapLocation_2.5.0_20160526.jar')
 }

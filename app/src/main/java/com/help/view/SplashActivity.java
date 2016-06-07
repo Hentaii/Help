@@ -7,9 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.help.R;
+import com.help.app.BaseActivity;
 import com.help.util.Util;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
     private SharedPreferences sp;
 
     @Override

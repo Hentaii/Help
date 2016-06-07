@@ -12,12 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.help.R;
+import com.help.app.BaseActivity;
 import com.help.util.Util;
 
 import java.util.ArrayList;
 
 
-public class UseHelpActivity extends AppCompatActivity implements View.OnClickListener {
+public class UseHelpActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private View view1, view2, view3, view4, view5;
     private ArrayList<View> views;
