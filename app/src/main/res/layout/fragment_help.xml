@@ -22,7 +22,20 @@
             android:textColor="@color/colorWhite_ffffff"
             android:textSize="16sp"/>
 
+
+
+        <ImageView
+            android:id="@+id/iv_refresh"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/refresh"
+            />
+
         <TextView
+            android:layout_toLeftOf="@id/iv_refresh"
             android:id="@+id/tv_positon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -31,8 +44,6 @@
             android:text="千喜鹤"
             android:textColor="@color/colorWhite_ffffff"
             android:textSize="12sp"/>
-
-
     </RelativeLayout>
 
 
