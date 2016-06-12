@@ -32,6 +32,10 @@ public class LocationService extends Service {
 
     }
 
+    public void show() {
+        Toast.makeText(LocationService.this, "in", Toast.LENGTH_SHORT).show();
+    }
+
     public void initLocation(IGetMapLocation callback) {
         //初始化定位回调监听器
         mLocationListener = new LocationListener(callback);

@@ -35,12 +35,13 @@ public class HelpFragment extends Fragment {
     private TextView mTvPosition;
     private ImageView mIvRefresh;
     private String currentPosition;
-    private boolean firstLocation = true;
+    static private boolean firstLocation = true;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_help, container, false);
+        firstLocation = true;
         initView();
         initListener();
         initService();
