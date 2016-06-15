@@ -8,7 +8,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +19,8 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.help.R;
 import com.help.config.IGetMapLocation;
-import com.help.model.LocationService;
+import com.help.service.LocationService;
 import com.help.util.Util;
-import com.help.widge.CircleButtonWithProgerss;
 
 /**
  * Created by gan on 2016/6/3.

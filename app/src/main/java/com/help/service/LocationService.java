@@ -1,4 +1,4 @@
-package com.help.model;
+package com.help.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -11,10 +11,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps.LocationSource;
 import com.help.config.IGetMapLocation;
-
-import java.text.SimpleDateFormat;
 
 public class LocationService extends Service {
 
@@ -59,7 +56,9 @@ public class LocationService extends Service {
 //设置定位间隔,单位毫秒,默认为2000ms
         mLocationOption.setInterval(2000);
 //给定位客户端对象设置定位参数
+        mLocationOption.setNeedAddress(true);
         mLocationClient.setLocationOption(mLocationOption);
+
 //启动定位
         mLocationClient.startLocation();
     }
@@ -90,6 +89,7 @@ class LocationListener implements AMapLocationListener {
             if (amapLocation.getErrorCode() == 0) {
                 //定位成功回调信息，设置相关消息
                 amapLocation.getAddress();//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+//                Log.d("getAddress", "getLatitude" + amapLocation.getLatitude());
                 callback.getLocationSuccess(amapLocation);
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。

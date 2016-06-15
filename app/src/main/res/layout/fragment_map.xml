@@ -15,19 +15,22 @@
             android:background="@mipmap/search"/>
 
         <EditText
-            android:layout_weight="1"
+            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:layout_weight="1"
             android:background="@drawable/bg_edittext"/>
+
         <Button
-            android:background="@android:color/transparent"
             android:layout_width="60dp"
-            android:textSize="12sp"
-            android:textColor="@color/colorPrimary_Blue_4EA2F8"
             android:layout_height="wrap_content"
-            android:text="搜索"/>
+            android:background="@android:color/transparent"
+            android:text="搜索"
+            android:textColor="@color/colorPrimary_Blue_4EA2F8"
+            android:textSize="12sp"/>
     </LinearLayout>
+
     <com.amap.api.maps.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"

@@ -42,7 +42,7 @@
 
         <service android:name="com.amap.api.location.APSService"/>
         <service
-            android:name=".model.LocationService"
+            android:name=".service.LocationService"
             android:enabled="true"
             android:exported="true">
         </service>
