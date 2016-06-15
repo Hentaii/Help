@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class Util {
     }
 
     /**
-    得到sp
+     * 得到sp
      */
     public static SharedPreferences getSp(Context context) {
         return context.getSharedPreferences("config", Context.MODE_PRIVATE);
@@ -198,5 +199,17 @@ public class Util {
         Date curDate = new Date(System.currentTimeMillis());
         String currentDate = sdf.format(curDate);
         return currentDate;
+    }
+
+    /**
+     * 注意要添加权限:<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+     *
+     * @param context
+     * @return
+     */
+    public static String getIMEI(Context context) {
+        String IMEI = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE))
+                .getDeviceId();
+        return IMEI;
     }
 }

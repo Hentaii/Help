@@ -24,7 +24,12 @@ public class APP extends LitePalApplication {
         super.onCreate();
         initLitePal();
         initGalleryFinal();
+//        initBmob();
     }
+
+//    private void initBmob() {
+//        Bmob.initialize(this, "eef42e04394984448a41a93d35c5ae78");
+//    }
 
     private void initGalleryFinal() {
         /*****主题配置****/

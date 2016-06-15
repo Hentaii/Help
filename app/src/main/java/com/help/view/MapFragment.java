@@ -2,7 +2,6 @@ package com.help.view;
 
 import android.app.Fragment;
 import android.content.ComponentName;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -14,7 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
@@ -24,11 +25,15 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
 import com.help.R;
 import com.help.config.IGetMapLocation;
+import com.help.model.bean.LocationInfo;
 import com.help.service.LocationService;
+
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by gan on 2016/6/3.
@@ -36,11 +41,15 @@ import com.help.service.LocationService;
 public class MapFragment extends Fragment implements LocationSource {
     private View view;
     private EditText mEtSearch;
+    private Button mBtSearch;
+    private ImageView mIvSearch;
     private MapView mapView;
     private AMap aMap;
     private OnLocationChangedListener mListener;
     private ServiceConnection sc;
     private AMapLocation lastLocation;
+    private LocationInfo locationInfo;
+    private List<LatLng> latLngList;
 
     @Nullable
     @Override
@@ -48,17 +57,64 @@ public class MapFragment extends Fragment implements LocationSource {
         view = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = (MapView) view.findViewById(R.id.map);
         mEtSearch = (EditText) view.findViewById(R.id.et_search);
+        mBtSearch = (Button) view.findViewById(R.id.bt_search);
+        mIvSearch = (ImageView) view.findViewById(R.id.iv_search_pic);
+
+//        initLocationInfo();
+
+
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
         mapView.onCreate(savedInstanceState);
         init();
         return view;
     }
 
+//    private void initLocationInfo() {
+//        BmobQuery<LocationInfo> query = new BmobQuery<>();
+//        query.addWhereEqualTo("IMEI", Util.getIMEI(getActivity()));
+//        query.findObjects(getActivity(), new FindListener<LocationInfo>() {
+//            @Override
+//            public void onSuccess(List<LocationInfo> list) {
+//                if (list.size() == 0) {
+//                    locationInfo = list.get(0);
+//                    latLngList = locationInfo.getLatLngList();
+//                } else {
+//                    locationInfo = new LocationInfo();
+//                    latLngList = new ArrayList<>();
+//                    locationInfo.setLatLngList(latLngList);
+//                    locationInfo.setIMEI(Util.getIMEI(getActivity()));
+//                    locationInfo.save(getActivity());
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int i, String s) {
+//
+//            }
+//        });
+//    }
+
 
     private void init() {
         aMap = mapView.getMap();
         setUpMap();
         setUpDot();
+        //测试保存图片
+//        mBtSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                GetMapShotPresenter presenter = new GetMapShotPresenter(getActivity(), new IGetScreenShot() {
+//                    @Override
+//                    public void getScreenShotSuccess(Bitmap bitmap) {
+//                        Util.Toast(getActivity(), "Click");
+//                        mapView.setVisibility(View.GONE);
+//                        mIvSearch.setVisibility(View.VISIBLE);
+//                        mIvSearch.setImageBitmap(bitmap);
+//                    }
+//                });
+//                presenter.getMapScreenShot(aMap);
+//            }
+//        });
     }
 
     private void setUpDot() {
@@ -88,7 +144,7 @@ public class MapFragment extends Fragment implements LocationSource {
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
     }
 
     /**
@@ -115,15 +171,28 @@ public class MapFragment extends Fragment implements LocationSource {
                     @Override
                     public void getLocationSuccess(AMapLocation amapLocation) {
                         mListener.onLocationChanged(amapLocation);
+
                         if (null == lastLocation) {
                             lastLocation = amapLocation;
                         }
-                        aMap.addPolyline(new PolylineOptions().add(new LatLng(lastLocation.getLatitude(),
-                                lastLocation.getLongitude()), new LatLng(amapLocation.getLatitude(), amapLocation
-                                .getLongitude())));
+
+                        //添加所有点到bomb
+                        latLngList.add(new LatLng(amapLocation.getLatitude(),
+                                amapLocation.getLongitude()));
+                        Timer timer = new Timer(true);
+//                        timer.schedule(new TimerTask() {
+//                            @Override
+//                            public void run() {
+//                                locationInfo.update(getActivity());
+//                            }
+//                        }, 5000);
+
+
+                        aMap.addPolyline(new PolylineOptions().color(R.color.colorPrimary_Blue_4EA2F8).add(new LatLng
+                                (lastLocation.getLatitude(),
+                                        lastLocation.getLongitude()), new LatLng(amapLocation.getLatitude(),
+                                amapLocation.getLongitude())));
                         lastLocation = amapLocation;
-                        Log.d("TAG", "amapLocation" + "La" + amapLocation.getLatitude() + "Long" + amapLocation
-                                .getLongitude());
                     }
                 });
             }

@@ -17,6 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['libs']
+//
+//        }
+//    }
 
 }
 
@@ -31,4 +37,8 @@ dependencies {
     compile 'cn.finalteam:galleryfinal:1.4.8.7'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile files('libs/AMap3DMap_3.3.2_AMapSearch_3.2.1_AMapLocation_2.5.0_20160526.jar')
+//    //以下SDK开发者请根据需要自行选择
+//    //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
+//    //3.4.7-aar：请务必查看下面注释[1]
+//    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
 }
