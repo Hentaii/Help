@@ -82,15 +82,15 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_tb_left:
-                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.unused));
-                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.used));
+                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.left_use));
+                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.right_unuse));
                 mTvTabHelp.setTextColor(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
                 mTvTabMap.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
                 showFragment(mFgHelp);
                 break;
             case R.id.tv_tb_right:
-                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.used_1));
-                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.unuse_1));
+                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.left_unuse));
+                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.right_use));
                 mTvTabHelp.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
                 mTvTabMap.setTextColor(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
                 showFragment(mFgMap);

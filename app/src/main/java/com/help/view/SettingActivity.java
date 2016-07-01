@@ -18,7 +18,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private LinearLayout ll_back;
     private RelativeLayout rl_instruction;
-    private RelativeLayout rl_share;
+//    private RelativeLayout rl_share;
     private RelativeLayout rl_quick_help;
     private Switch sth_help;
 
@@ -37,7 +37,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         rl_quick_help.setOnClickListener(this);
         ll_back.setOnClickListener(this);
         rl_instruction.setOnClickListener(this);
-        rl_share.setOnClickListener(this);
+//        rl_share.setOnClickListener(this);
     }
 
     private void initView() {
@@ -45,7 +45,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         rl_quick_help = (RelativeLayout) findViewById(R.id.rl_quick_help);
         sth_help = (Switch) findViewById(R.id.sth_help);
         rl_instruction = (RelativeLayout) findViewById(R.id.rl_instruction);
-        rl_share = (RelativeLayout) findViewById(R.id.rl_share);
+//        rl_share = (RelativeLayout) findViewById(R.id.rl_share);
     }
 
     @Override
@@ -60,9 +60,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.rl_instruction:
                 presenter.instruction();
                 break;
-            case R.id.rl_share:
-                presenter.share();
-                break;
+//            case R.id.rl_share:
+//                presenter.share();
+//                break;
         }
     }
 

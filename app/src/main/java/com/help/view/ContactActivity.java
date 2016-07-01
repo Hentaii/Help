@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.github.clans.fab.CircleImageView;
 import com.help.R;
 import com.help.api.API;
 import com.help.app.BaseActivity;
@@ -21,7 +22,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by KiSoo on 2016/6/5.
@@ -69,6 +69,7 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
         rl_head.setOnClickListener(this);
         tv_delete.setOnClickListener(this);
         iv_save.setOnClickListener(this);
+        civ_head.setOnClickListener(this);
         rl_head.setOnLongClickListener(this);
     }
 
@@ -76,9 +77,12 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_back:
-                finish();
+                presenter.ll_back();
                 break;
             case R.id.rl_head:
+                presenter.rl_head();
+                break;
+            case R.id.civ_head:
                 presenter.rl_head();
                 break;
             case R.id.tv_delete:

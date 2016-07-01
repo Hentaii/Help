@@ -1,13 +1,16 @@
 package com.help.presenter;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.help.api.API;
 import com.help.app.APP;
 import com.help.config.IContactActivityView;
 import com.help.model.bean.HelpContact;
@@ -56,8 +59,23 @@ public class ContactActivityPresenter {
     }
 
     public void tv_delete() {
-        APP.delete(mContact);
-        view.finish();
+        new AlertDialog.Builder(context)
+                .setTitle(API.TITLE)
+                .setMessage(API.IF_DELETE)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() { //设置确定按钮
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        APP.delete(mContact);
+                        view.finish();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() { //设置取消按钮
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 
     //保存
@@ -95,4 +113,22 @@ public class ContactActivityPresenter {
     }
 
 
+    public void ll_back() {
+        new AlertDialog.Builder(context)
+                .setTitle(API.TITLE)
+                .setMessage(API.IF_BACK)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() { //设置确定按钮
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        view.finish();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() { //设置取消按钮
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
 }

@@ -74,26 +74,26 @@
             android:src="@mipmap/icon_right"
             android:layout_marginRight="18dp"/>
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_marginTop="3dp"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:id="@+id/rl_share"
-        android:background="@color/white_background"
-        android:gravity="center_vertical">
-        <TextView
-            android:text="@string/share_app"
-            android:layout_marginLeft="18dp"
-            android:textSize="20sp"
-            android:textColor="@color/bottom_color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:src="@mipmap/icon_right"
-            android:layout_marginRight="18dp"/>
-    </RelativeLayout>
+    <!--<RelativeLayout-->
+        <!--android:layout_marginTop="3dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:id="@+id/rl_share"-->
+        <!--android:background="@color/white_background"-->
+        <!--android:gravity="center_vertical">-->
+        <!--<TextView-->
+            <!--android:text="@string/share_app"-->
+            <!--android:layout_marginLeft="18dp"-->
+            <!--android:textSize="20sp"-->
+            <!--android:textColor="@color/bottom_color"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--<ImageView-->
+            <!--android:layout_width="32dp"-->
+            <!--android:layout_height="32dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:src="@mipmap/icon_right"-->
+            <!--android:layout_marginRight="18dp"/>-->
+    <!--</RelativeLayout>-->
 
 </LinearLayout>
