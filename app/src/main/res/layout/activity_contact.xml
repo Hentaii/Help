@@ -1,224 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:background="@color/colorPrimary_Blue_4EA2F8">
-
-        <LinearLayout
-            android:id="@+id/ll_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="6dp"
-                android:src="@mipmap/icon_back" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tb_connact"
-                android:textColor="@color/white_background"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_save"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="12dp"
-            android:padding="6dp"
-            android:src="@mipmap/icon_save" />
-    </android.support.v7.widget.Toolbar>
-
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/fragment_background"
-        android:gravity="center_horizontal"
         android:orientation="vertical">
-        <RelativeLayout
-            android:id="@+id/rl_head"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/white_background">
 
-            <TextView
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/colorPrimary_Blue_4EA2F8">
+
+            <LinearLayout
+                android:id="@+id/ll_back"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="64dp"
-                android:text="@string/head"
-                android:textColor="@color/bottom_color"
-                android:textSize="20sp" />
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/civ_head"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginTop="8dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="160dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:padding="6dp"
+                    android:src="@mipmap/icon_back" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tb_connact"
+                    android:textColor="@color/white_background"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_save"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="right"
                 android:layout_marginRight="12dp"
-                android:src="@mipmap/dl_example_head" />
-        </RelativeLayout>
-        <View
+                android:padding="6dp"
+                android:src="@mipmap/icon_save" />
+        </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
-            android:background="@color/add_vehicle_text_color" />
+            android:layout_height="match_parent"
+            android:background="@color/fragment_background"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/rl_head"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/white_background">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="64dp"
+                    android:text="@string/head"
+                    android:textColor="@color/bottom_color"
+                    android:textSize="20sp" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ_head"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="160dp"
+                    android:layout_marginRight="12dp"
+                    android:src="@mipmap/dl_example_head" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:background="@color/add_vehicle_text_color" />
 
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:background="@color/white_background">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="64dp"
-                android:text="@string/name"
-                android:textColor="@color/bottom_color"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/et_name"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="160dp"
-                android:layout_marginRight="12dp"
-                android:background="@null"
-                android:text="@string/example_name"
-                android:textColor="@color/bottom_color"
-                android:textSize="20sp" />
-        </RelativeLayout>
+                android:background="@color/white_background">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
-            android:background="@color/add_vehicle_text_color" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="64dp"
+                    android:text="@string/name"
+                    android:textColor="@color/bottom_color"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="160dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@null"
+                    android:text="@string/example_name"
+                    android:textColor="@color/bottom_color"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:background="@color/add_vehicle_text_color" />
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:background="@color/white_background">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="64dp"
-                android:text="@string/tel"
-                android:textColor="@color/bottom_color"
-                android:textSize="20sp" />
-
-            <EditText
-                android:inputType="phone"
-                android:id="@+id/et_tel"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="160dp"
-                android:layout_marginRight="16dp"
-                android:background="@null"
-                android:text="@string/example_tel"
-                android:textColor="@color/bottom_color"
-                android:textSize="20sp" />
-        </RelativeLayout>
+                android:background="@color/white_background">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
-            android:background="@color/add_vehicle_text_color" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="64dp"
+                    android:text="@string/tel"
+                    android:textColor="@color/bottom_color"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="48dp"
-            android:layout_marginTop="4dp"
-            android:text="@string/spark_model"
-            android:textSize="16sp" />
+                <EditText
+                    android:inputType="phone"
+                    android:id="@+id/et_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="160dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@null"
+                    android:text="@string/tel"
+                    android:textColor="@color/bottom_color"
+                    android:textSize="20sp" />
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:background="@color/white_background"
-            android:gravity="center_vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:background="@color/add_vehicle_text_color" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="64dp"
-                android:text="@string/sms"
-                android:textColor="@color/bottom_color"
-                android:textSize="20sp" />
+                android:layout_gravity="left"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="48dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/spark_model"
+                android:textSize="16sp" />
 
-            <Switch
-                android:id="@+id/sth_sms"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@color/white_background"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="64dp"
+                    android:text="@string/sms"
+                    android:textColor="@color/bottom_color"
+                    android:textSize="20sp" />
+
+                <Switch
+                    android:id="@+id/sth_sms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="64dp"
+                    android:checked="true" />
+            </RelativeLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="64dp"
-                android:checked="true" />
-        </RelativeLayout>
+                android:layout_gravity="left"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="48dp"
+                android:layout_marginTop="4dp"
+                android:text="短信内容："
+                android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="48dp"
-            android:layout_marginTop="4dp"
-            android:text="短信内容："
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/et_sms"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/white_background"
-            android:gravity="top"
-            android:paddingBottom="4dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:paddingTop="4dp"
-            android:text="@string/example_sms" />
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="48dp"
-            android:id="@+id/tv_delete"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:textColor="@color/colorWhite_ffffff"
-            android:background="@mipmap/back_delete"
-            android:text="@string/delete"/>
+            <EditText
+                android:id="@+id/et_sms"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/white_background"
+                android:gravity="top"
+                android:paddingBottom="4dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="4dp"
+                android:text="@string/example_sms" />
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:id="@+id/tv_delete"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textColor="@color/colorWhite_ffffff"
+                android:background="@mipmap/back_delete"
+                android:text="@string/delete"/>
 
 
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+

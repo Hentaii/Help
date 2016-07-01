@@ -1,30 +1,42 @@
 package com.help.app;
 
+import android.app.Application;
+
 import com.help.R;
 import com.help.model.bean.HelpContact;
 import com.help.util.galleryfinal.PicassoImageLoader;
-
-import org.litepal.LitePalApplication;
-
-import java.util.List;
 
 import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.ThemeConfig;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 /**
  * Created by gan on 2016/6/1.
  */
-public class APP extends LitePalApplication {
-    public static List<HelpContact> contacts;
+public class APP extends Application {
+    public static Realm realm;
+    private static RealmResults<HelpContact> allContact;
+
+    public static RealmResults<HelpContact> getAllContact() {
+        return allContact;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        initLitePal();
+        initRealmJava();
         initGalleryFinal();
-//        initBmob();
+    }
+
+    private void initRealmJava() {
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+        realm = Realm.getDefaultInstance();
+        allContact = realm.where(HelpContact.class).findAll();
     }
 
 //    private void initBmob() {
@@ -54,7 +66,32 @@ public class APP extends LitePalApplication {
         GalleryFinal.init(config);
     }
 
-    private void initLitePal() {
-        LitePalApplication.initialize(this);
+
+    public static HelpContact getContact(final long position) {
+        return realm.where(HelpContact.class).equalTo("contactNo", position).findFirst();
+    }
+
+    public static void delete(final HelpContact mContact) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(HelpContact.class)
+                        .equalTo("contactNo", mContact.contactNo)
+                        .findAll()
+                        .deleteAllFromRealm();
+
+            }
+        });
+
+
+    }
+
+    public static void add(final HelpContact contact) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealm(contact);
+            }
+        });
     }
 }

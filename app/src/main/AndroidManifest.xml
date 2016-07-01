@@ -30,7 +30,7 @@
         android:theme="@style/myAppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="481abed7dbcc3196a0c21985a0916529">
+            android:value="@string/key_kisoo">
         </meta-data>
 
         <activity android:name=".view.SplashActivity">
@@ -40,7 +40,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.HelpActivity"/>
+        <activity android:name=".view.HelpActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".app.BaseActivity"/>
         <activity android:name=".view.UseHelpActivity"/>
         <activity android:name=".view.GuideActivity"/>

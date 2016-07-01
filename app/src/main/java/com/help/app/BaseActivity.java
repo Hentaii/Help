@@ -1,15 +1,16 @@
 package com.help.app;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import com.help.R;
+import android.support.v7.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity {
+
+    protected String TAG = this.getClass().getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
     }
+
+
 }

@@ -11,6 +11,7 @@
 
         <LinearLayout
             android:id="@+id/ll_back"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical">
@@ -18,10 +19,7 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:paddingBottom="6dp"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:paddingTop="6dp"
+                android:padding="8dp"
                 android:src="@mipmap/icon_back" />
 
             <TextView
@@ -48,8 +46,8 @@
             android:layout_height="wrap_content" />
         <Switch
             android:id="@+id/sth_help"
-            android:focusable="false"
             android:clickable="false"
+            android:focusable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

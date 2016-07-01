@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.help.R;
 import com.help.api.API;
-import com.help.app.APP;
 import com.help.app.BaseActivity;
 import com.help.config.IContactActivityView;
 import com.help.presenter.ContactActivityPresenter;
@@ -62,7 +61,7 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
 
     private void initData() {
         presenter = new ContactActivityPresenter(this, this,
-                getIntent().getIntExtra(API.KEY_CONTACT_NO, APP.contacts.size()));
+                getIntent().getLongExtra(API.KEY_CONTACT_NO, System.currentTimeMillis()));
     }
 
     private void initListener() {
@@ -114,7 +113,10 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setHead(String head) {
-        Picasso.with(this).load(new File(head)).into(civ_head);
+        if (head.isEmpty())
+            Picasso.with(this).load(R.mipmap.dl_example_head).into(civ_head);
+        else
+            Picasso.with(this).load(new File(head)).into(civ_head);
     }
 
     @Override

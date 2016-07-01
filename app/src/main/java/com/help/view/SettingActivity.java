@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import com.help.R;
 import com.help.app.BaseActivity;
@@ -29,12 +28,24 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settting);
+        initView();
+        initListener();
+        presenter = new SettingActivityPresenter(this, this);
+    }
+
+    private void initListener() {
+        rl_quick_help.setOnClickListener(this);
+        ll_back.setOnClickListener(this);
+        rl_instruction.setOnClickListener(this);
+        rl_share.setOnClickListener(this);
+    }
+
+    private void initView() {
         ll_back = (LinearLayout) findViewById(R.id.ll_back);
         rl_quick_help = (RelativeLayout) findViewById(R.id.rl_quick_help);
         sth_help = (Switch) findViewById(R.id.sth_help);
         rl_instruction = (RelativeLayout) findViewById(R.id.rl_instruction);
         rl_share = (RelativeLayout) findViewById(R.id.rl_share);
-        presenter = new SettingActivityPresenter(this, this);
     }
 
     @Override

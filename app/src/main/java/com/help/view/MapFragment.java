@@ -1,6 +1,5 @@
 package com.help.view;
 
-import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +33,6 @@ import com.help.service.LocationService;
 
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by gan on 2016/6/3.

@@ -1,49 +1,41 @@
 package com.help.view;
 
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.help.R;
 import com.help.api.API;
-import com.help.app.APP;
 import com.help.app.BaseActivity;
-import com.help.model.bean.HelpContact;
 import com.help.util.Util;
-
-import org.litepal.crud.DataSupport;
 
 public class HelpActivity extends BaseActivity implements View.OnClickListener {
     private TextView mTvTabHelp;
     private TextView mTvTabMap;
     private HelpFragment mFgHelp;
     private MapFragment mFgMap;
+    private Fragment currentFragment;
     private ImageView mIvSet;
     private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        APP.contacts = DataSupport.findAll(HelpContact.class);
         initView();
         initFragment();
     }
 
     private void initFragment() {
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
         mFgHelp = new HelpFragment();
         mFgMap = new MapFragment();
-
-        transaction.replace(R.id.fl_content, mFgHelp);
-        transaction.commit();
+        showFragment(mFgHelp);
     }
 
     private void initView() {
@@ -88,54 +80,39 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
-        FragmentManager fm = getFragmentManager();
-        // 开启Fragment事务
-        FragmentTransaction transaction = fm.beginTransaction();
-
         switch (v.getId()) {
             case R.id.tv_tb_left:
                 mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.unused));
                 mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.used));
                 mTvTabHelp.setTextColor(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
                 mTvTabMap.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
-//                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.used_1));
-//                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.unuse_1));
-//                mTvTabHelp.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
-//                mTvTabMap.setTextColor(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
-                if (mFgHelp == null) {
-                    mFgHelp = new HelpFragment();
-                }
-                // 使用当前Fragment的布局替代id_content的控件
-                transaction.replace(R.id.fl_content, mFgHelp);
+                showFragment(mFgHelp);
                 break;
             case R.id.tv_tb_right:
-
-//                mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.unused));
-//                mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.used));
                 mTvTabHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.used_1));
                 mTvTabMap.setBackgroundDrawable(getResources().getDrawable(R.drawable.unuse_1));
-//                mTvTabHelp.setTextColor(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
-//                mTvTabMap.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
                 mTvTabHelp.setTextColor(getResources().getColor(R.color.colorWhite_ffffff));
                 mTvTabMap.setTextColor(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
-                if (mFgMap == null) {
-                    mFgMap = new MapFragment();
-                }
-                transaction.replace(R.id.fl_content, mFgMap);
+                showFragment(mFgMap);
                 break;
             case R.id.iv_set:
                 startActivity(new Intent(HelpActivity.this, SettingActivity.class));
                 break;
         }
-        // 事务提交
+
+    }
+
+    private void showFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (currentFragment != null)
+            transaction.hide(currentFragment);
+        if (fragment.isAdded())
+            transaction.show(fragment);
+        else
+            transaction.add(R.id.fl_content, fragment);
+        currentFragment = fragment;
         transaction.commit();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        DataSupport.deleteAll(HelpContact.class);
-        DataSupport.saveAll(APP.contacts);
-    }
+
 }

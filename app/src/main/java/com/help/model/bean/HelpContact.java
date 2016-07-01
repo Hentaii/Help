@@ -1,32 +1,47 @@
 package com.help.model.bean;
 
-import org.litepal.crud.DataSupport;
+import android.content.Context;
+import android.support.annotation.StringRes;
+
+import com.help.R;
+
+import io.realm.RealmObject;
 
 /**
  * Created by KiSoo on 2016/6/5.
  */
-public class HelpContact extends DataSupport{
-    private String tel;
-    private String name;
-    private String smsText;
-    private boolean sms;
-    private String head;
-    private int contactNo;
+public class HelpContact extends RealmObject{
+    public String tel;
+    public String name;
+    public String smsText;
+    public boolean sms;
+    public String head;
+    public long contactNo;
 
-    public int getContactNo() {
-        return contactNo;
+    public HelpContact() {
     }
 
-    public void setContactNo(int contactNo) {
+    public HelpContact(Context context) {
+        this(getString(context, R.string.example_tel),
+                getString(context, R.string.example_name),
+                getString(context, R.string.example_sms),
+                true,
+                "",
+                System.currentTimeMillis()
+        );
+    }
+
+    private static String getString(Context context, @StringRes int id) {
+        return context.getResources().getString(id);
+    }
+
+    public HelpContact(String tel, String name, String smsText, boolean sms, String head, long contactNo) {
+        this.tel = tel;
+        this.name = name;
+        this.smsText = smsText;
+        this.sms = sms;
+        this.head = head;
         this.contactNo = contactNo;
-    }
-
-    public int getNo() {
-        return contactNo;
-    }
-
-    public void setNo(int no) {
-        this.contactNo = no;
     }
 
     public String getTel() {
@@ -67,5 +82,13 @@ public class HelpContact extends DataSupport{
 
     public void setHead(String head) {
         this.head = head;
+    }
+
+    public long getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(long contactNo) {
+        this.contactNo = contactNo;
     }
 }

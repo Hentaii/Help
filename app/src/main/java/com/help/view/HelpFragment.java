@@ -1,6 +1,5 @@
 package com.help.view;
 
-import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +7,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +15,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
+import com.github.clans.fab.CircleImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.help.R;
+import com.help.api.API;
+import com.help.app.APP;
 import com.help.config.IGetMapLocation;
+import com.help.model.bean.HelpContact;
 import com.help.service.LocationService;
 import com.help.util.Util;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+
+import io.realm.RealmResults;
 
 /**
  * Created by gan on 2016/6/3.
  */
-public class HelpFragment extends Fragment {
+public class HelpFragment extends BaseFragment implements View.OnClickListener {
+
     private FloatingActionMenu mFbMenu;
     private FloatingActionButton mFbAdd;
     private View view;
@@ -38,12 +48,31 @@ public class HelpFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_help, container, false);
+        view = super.onCreateView(inflater, container, savedInstanceState);
         firstLocation = true;
         initView();
         initListener();
         initService();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initContacts();
+    }
+
+    private void initContacts() {
+        RealmResults<HelpContact> contacts = APP.getAllContact();
+        mFbMenu.removeAllMenuButtons(R.id.fb_add);
+        for (HelpContact contact : contacts) {
+            addContect(contact);
+        }
+    }
+
+    @Override
+    protected int getContentId() {
+        return R.layout.fragment_help;
     }
 
     private void initService() {
@@ -73,22 +102,8 @@ public class HelpFragment extends Fragment {
     }
 
     private void initListener() {
-        mFbAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mFbMenu.getChildCount() < 6) {
-                    addContect(mFbMenu);
-                } else {
-                    Util.Toast(getActivity(), "人数已满");
-                }
-            }
-        });
-        mIvRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTvPosition.setText(currentPosition);
-            }
-        });
+        mFbAdd.setOnClickListener(this);
+        mIvRefresh.setOnClickListener(this);
     }
 
     private void initView() {
@@ -98,18 +113,42 @@ public class HelpFragment extends Fragment {
         mIvRefresh = (ImageView) view.findViewById(R.id.iv_refresh);
     }
 
-    private void addContect(FloatingActionMenu mFbMenu) {
-        FloatingActionButton fb = new FloatingActionButton(getActivity());
-        fb.setColorNormal(getResources().getColor(R.color.colorPrimary_Blue_4EA2F8));
-        fb.setColorPressed(getResources().getColor(R.color.colorPrimary));
-        fb.setColorRipple(getResources().getColor(R.color.colorRippleGray));
-        fb.setButtonSize(FloatingActionButton.SIZE_MINI);
-        mFbMenu.addMenuButton(fb);
+    private void addContect(HelpContact contact) {
+        CircleImageView circleImageView = new CircleImageView(getActivity());
+        circleImageView.setOnClickListener(this);
+        if (!contact.head.isEmpty())
+            Picasso.with(getActivity()).load(new File(contact.getHead())).into(circleImageView);
+        else
+            Picasso.with(getActivity()).load(R.mipmap.dl_example_head).into(circleImageView);
+        mFbMenu.addMenuButton(circleImageView);
+        circleImageView.setTag(contact.getContactNo());
     }
 
     @Override
     public void onDestroy() {
         getActivity().unbindService(sc);
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_refresh:
+                mTvPosition.setText(currentPosition);
+                break;
+            case R.id.fb_add:
+                if (APP.getAllContact().size() < 4) {
+                    HelpContact contact = new HelpContact(getActivity());
+                    addContect(contact);
+                    APP.add(contact);
+                } else {
+                    Util.Toast(getActivity(), "人数已满");
+                    Log.e(TAG, "人数已经满了");
+                }
+                break;
+            default:
+                getActivity().startActivity(new Intent(getActivity(), ContactActivity.class).putExtra(API.KEY_CONTACT_NO, (long) v.getTag()));
+                break;
+        }
     }
 }

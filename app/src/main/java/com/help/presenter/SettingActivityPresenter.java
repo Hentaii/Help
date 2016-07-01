@@ -1,8 +1,10 @@
 package com.help.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.help.config.ISettingActivityView;
+import com.help.view.UseHelpActivity;
 
 /**
  * Created by KiSoo on 2016/6/3.
@@ -23,7 +25,7 @@ public class SettingActivityPresenter {
 
     //帮助说明
     public void instruction() {
-
+        context.startActivity(new Intent(context, UseHelpActivity.class));
     }
 
     //分享

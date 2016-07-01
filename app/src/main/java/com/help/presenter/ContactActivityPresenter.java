@@ -7,16 +7,17 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.help.app.APP;
 import com.help.config.IContactActivityView;
 import com.help.model.bean.HelpContact;
+import com.help.util.Util;
 
 import java.util.List;
 
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
+import io.realm.Realm;
 
 /**
  * Created by KiSoo on 2016/6/5.
@@ -24,23 +25,19 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
 public class ContactActivityPresenter {
     private Context context;
     private IContactActivityView view;
-    private int contactNo;
-    private String head = "";
+    private HelpContact mContact;
+    private String head;
 
-    public ContactActivityPresenter(Context context, IContactActivityView view, int contactNo) {
+    public ContactActivityPresenter(Context context, IContactActivityView view, long contactNo) {
         this.context = context;
         this.view = view;
-        this.contactNo = contactNo;
-        for (HelpContact mContact : APP.contacts) {
-            if (mContact.getNo() == contactNo) {
-                view.setHead(mContact.getHead());
-                view.setSms(mContact.isSms());
-                view.setSmsText(mContact.getSmsText());
-                view.setTel(mContact.getTel());
-                view.setName(mContact.getName());
-                head = mContact.getHead();
-            }
-        }
+        mContact = APP.getContact(contactNo);
+        view.setHead(mContact.getHead());
+        view.setSms(mContact.isSms());
+        view.setSmsText(mContact.getSmsText());
+        view.setTel(mContact.getTel());
+        view.setName(mContact.getName());
+        this.head = mContact.getHead();
     }
 
     public void rl_head() {
@@ -53,45 +50,28 @@ public class ContactActivityPresenter {
 
             @Override
             public void onHanlderFailure(int requestCode, String errorMsg) {
-                toast(errorMsg);
+                Util.Toast(context, errorMsg);
             }
         });
     }
 
-    private void toast(String errorMsg) {
-        Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show();
-    }
-
     public void tv_delete() {
-        for (HelpContact contact : APP.contacts) {
-            if (contact.getNo() == contactNo) {
-                APP.contacts.remove(contact);
-                break;
-            }
-        }
+        APP.delete(mContact);
         view.finish();
     }
 
     //保存
     public void iv_save() {
-        for (HelpContact mContact : APP.contacts) {
-            if (mContact.getNo() == contactNo) {
-                mContact.setHead(head);
-                mContact.setSms(view.getSms());
-                mContact.setSmsText(view.getSmsText());
-                mContact.setTel(view.getTel());
+        APP.realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
                 mContact.setName(view.getName());
-                return;
+                mContact.setTel(view.getTel());
+                mContact.setSmsText(view.getSmsText());
+                mContact.setSms(view.getSms());
+                mContact.setHead(head);
             }
-        }
-        HelpContact contact = new HelpContact();
-        contact.setName(view.getName());
-        contact.setTel(view.getTel());
-        contact.setSmsText(view.getSmsText());
-        contact.setSms(view.getSms());
-        contact.setHead(head);
-        contact.setNo(contactNo);
-        APP.contacts.add(contact);
+        });
     }
 
     public void analysis(Intent data) {
@@ -113,4 +93,6 @@ public class ContactActivityPresenter {
         phone.moveToFirst();
         view.setTel(phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
     }
+
+
 }
