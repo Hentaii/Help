@@ -1,5 +1,6 @@
 package com.help.model.bean;
 
+
 import com.amap.api.maps.model.LatLng;
 
 import java.util.List;

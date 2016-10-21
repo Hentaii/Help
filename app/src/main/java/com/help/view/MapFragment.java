@@ -22,6 +22,8 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.SupportMapFragment;
+import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
@@ -50,20 +52,20 @@ public class MapFragment extends Fragment implements LocationSource {
     private LocationInfo locationInfo;
     private List<LatLng> latLngList;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_map, container, false);
-        mapView = (MapView) view.findViewById(R.id.map);
+//        mapView = (MapView) view.findViewById(R.id.map);
         mEtSearch = (EditText) view.findViewById(R.id.et_search);
         mBtSearch = (Button) view.findViewById(R.id.bt_search);
-        mIvSearch = (ImageView) view.findViewById(R.id.iv_search_pic);
-
+//        mIvSearch = (ImageView) view.findViewById(R.id.iv_search_pic);
+        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
+//        mapView.onCreate(savedInstanceState);
 //        initLocationInfo();
 
 
-        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
-        mapView.onCreate(savedInstanceState);
         init();
         return view;
     }
@@ -95,9 +97,24 @@ public class MapFragment extends Fragment implements LocationSource {
 
 
     private void init() {
-        aMap = mapView.getMap();
-        setUpMap();
-        setUpDot();
+//        if (aMap == null) {
+//            aMap = mapView.getMap();
+//            setUpMap();
+//        } else {
+//            aMap.clear();
+//            aMap.setLocationSource(this);
+//            aMap.setMyLocationEnabled(true);
+//            aMap = mapView.getMap();
+//            setUpMap();
+//        }
+
+//        aMap = mapView.getMap();
+//        setUpMap();
+
+        aMap = ((SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map)).getMap();
+
+//        setUpMap();
+//        setUpDot();
         //测试保存图片
 //        mBtSearch.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -143,7 +160,7 @@ public class MapFragment extends Fragment implements LocationSource {
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+//        aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
     }
 
     /**
@@ -216,7 +233,7 @@ public class MapFragment extends Fragment implements LocationSource {
     @Override
     public void onResume() {
         super.onResume();
-        mapView.onResume();
+//        mapView.onResume();
     }
 
     /**
@@ -225,7 +242,7 @@ public class MapFragment extends Fragment implements LocationSource {
     @Override
     public void onPause() {
         super.onPause();
-        mapView.onPause();
+//        mapView.onPause();
         deactivate();
     }
 
@@ -235,7 +252,7 @@ public class MapFragment extends Fragment implements LocationSource {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
+//        mapView.onSaveInstanceState(outState);
     }
 
     /**
@@ -246,7 +263,7 @@ public class MapFragment extends Fragment implements LocationSource {
 
         super.onDestroy();
         Log.d("TAG", "onDestroy");
-        mapView.onDestroy();
+//        mapView.onDestroy();
     }
 
 
