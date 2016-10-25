@@ -2,6 +2,8 @@ package com.help.app;
 
 import android.app.Application;
 
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.maps.MapsInitializer;
 import com.help.R;
 import com.help.model.bean.HelpContact;
 import com.help.util.galleryfinal.PicassoImageLoader;

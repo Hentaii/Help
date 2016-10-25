@@ -38,7 +38,7 @@
         android:theme="@style/myAppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="@string/key_gan">
+            android:value="@string/key_gan" >
         </meta-data>
 
         <activity android:name=".view.SplashActivity">

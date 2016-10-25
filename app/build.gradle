@@ -20,12 +20,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-
-        }
-    }
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['libs']
+//
+//        }
+//    }
 
 }
 
@@ -45,5 +45,4 @@ dependencies {
     //    //3.4.7-aar：请务必查看下面注释[1]
     //    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
     compile project(':fab_library')
-    compile files('libs/AMap3DMap_4.1.1_AMapNavi_1.9.3_AMapLocation_3.0.0_20161019.jar')
 }

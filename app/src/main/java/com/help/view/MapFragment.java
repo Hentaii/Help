@@ -22,6 +22,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -52,17 +53,17 @@ public class MapFragment extends Fragment implements LocationSource {
     private LocationInfo locationInfo;
     private List<LatLng> latLngList;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_map, container, false);
-//        mapView = (MapView) view.findViewById(R.id.map);
+        mapView = (MapView) view.findViewById(R.id.map);
         mEtSearch = (EditText) view.findViewById(R.id.et_search);
         mBtSearch = (Button) view.findViewById(R.id.bt_search);
 //        mIvSearch = (ImageView) view.findViewById(R.id.iv_search_pic);
-        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
-//        mapView.onCreate(savedInstanceState);
+//        在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
+        mapView.onCreate(savedInstanceState);
 //        initLocationInfo();
 
 
@@ -108,10 +109,10 @@ public class MapFragment extends Fragment implements LocationSource {
 //            setUpMap();
 //        }
 
-//        aMap = mapView.getMap();
+        aMap = mapView.getMap();
 //        setUpMap();
 
-        aMap = ((SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map)).getMap();
+//        aMap = ((SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map)).getMap();
 
 //        setUpMap();
 //        setUpDot();
@@ -168,8 +169,8 @@ public class MapFragment extends Fragment implements LocationSource {
      */
     @Override
     public void activate(OnLocationChangedListener onLocationChangedListener) {
-        mListener = onLocationChangedListener;
-        initService(mListener);
+//        mListener = onLocationChangedListener;
+//        initService(mListener);
     }
 
     @Override
