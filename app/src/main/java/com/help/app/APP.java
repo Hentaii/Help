@@ -8,6 +8,7 @@ import com.help.R;
 import com.help.model.bean.HelpContact;
 import com.help.util.galleryfinal.PicassoImageLoader;
 
+import cn.bmob.v3.Bmob;
 import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
@@ -32,6 +33,11 @@ public class APP extends Application {
         super.onCreate();
         initRealmJava();
         initGalleryFinal();
+        initBmob();
+    }
+
+    private void initBmob() {
+        Bmob.initialize(this, "eef42e04394984448a41a93d35c5ae78");
     }
 
     private void initRealmJava() {

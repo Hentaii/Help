@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
@@ -28,7 +30,13 @@ import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
 import com.help.R;
 import com.help.config.IGetMapLocation;
+import com.help.model.bean.TestBmob;
 import com.help.service.LocationService;
+
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * Created by gan on 2016/6/3.
@@ -36,6 +44,7 @@ import com.help.service.LocationService;
 public class MapFragment extends android.support.v4.app.Fragment implements LocationSource {
     private View view;
     private EditText mEtSearch;
+    private Button mBtSearch;
     private MapView mapView;
     private AMap aMap;
     private OnLocationChangedListener mListener;
@@ -48,9 +57,30 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
         view = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = (MapView) view.findViewById(R.id.map);
         mEtSearch = (EditText) view.findViewById(R.id.et_search);
+        mBtSearch = (Button) view.findViewById(R.id.bt_search);
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
         mapView.onCreate(savedInstanceState);
         init();
+        mBtSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BmobUser bu = new BmobUser();
+                bu.setUsername("sendi");
+                bu.setPassword("123456");
+                bu.setEmail("sendi@163.com");
+//注意：不能用save方法进行注册
+                bu.signUp(new SaveListener<TestBmob>() {
+                    @Override
+                    public void done(TestBmob testBmob, BmobException e) {
+                        if (e == null) {
+                            Toast.makeText(getActivity(), "注册成功", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d("TAG", "wrong----" + e);
+                        }
+                    }
+                });
+            }
+        });
         return view;
     }
 
