@@ -3,7 +3,9 @@ package com.help.view;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -24,12 +26,19 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     private Fragment currentFragment;
     private ImageView mIvSet;
     private SharedPreferences sp;
+    private Networkreceiver networkreceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
         initFragment();
+        registerReceiver();
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver();
     }
 
     private void initFragment() {
@@ -113,6 +122,16 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
         currentFragment = fragment;
         transaction.commit();
     }
+    //动态注册网络的状态，绑定到networkreceiver
 
-
+    private  void registerReceiver(){
+        IntentFilter filter=new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        networkreceiver=new Networkreceiver();
+        this.registerReceiver(networkreceiver, filter);
+    }
+    //注销接收
+    private  void unregisterReceiver(){
+        this.unregisterReceiver(networkreceiver);
+    }
 }
+
