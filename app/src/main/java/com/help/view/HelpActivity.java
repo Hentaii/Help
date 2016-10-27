@@ -1,6 +1,7 @@
 package com.help.view;
 
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,7 +25,6 @@ import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.PolylineOptions;
 import com.help.R;
 import com.help.api.API;
 import com.help.app.BaseActivity;
@@ -197,6 +198,9 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
 
             if (flag && count == 6) {
                 Toast.makeText(context, "按了六下", Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < mFgHelp.getmData().size(); i++) {
+                    sendSms(mFgHelp.getmData().get(i).get("number").toString(),"您好，我现在可能遇到了危险,现在不方便打电话，如果10分钟内我没联系你，请你帮助我！");
+                }
                 mIMEI = Util.getIMEI(HelpActivity.this);
                 mBmobLatLng = new BmobLatLng(mLatLingList, mIMEI);
                 mBmobLatLng.save(new SaveListener<String>() {
@@ -212,6 +216,17 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
             }
             clickTime = System.currentTimeMillis();
         }
+    }
+
+
+    private void sendSms(String phone, String message) {
+
+        PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, HelpActivity.class), 0);
+
+        SmsManager sms = SmsManager.getDefault();
+
+        sms.sendTextMessage(phone, null, message, pi, null);
+
     }
 
     private void initUpdateLocationService() {

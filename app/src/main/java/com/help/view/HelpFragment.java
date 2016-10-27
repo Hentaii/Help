@@ -1,9 +1,12 @@
 package com.help.view;
 
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,9 +29,14 @@ import com.help.config.IGetMapLocation;
 import com.help.model.bean.HelpContact;
 import com.help.service.LocationService;
 import com.help.util.Util;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnItemClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import io.realm.RealmResults;
 
@@ -44,17 +53,41 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
     private ImageView mIvRefresh;
     private String currentPosition;
     static private boolean firstLocation = true;
+    private CallListAdapter mAdapter;
+    private List<HashMap<String, Object>> mData;
+
+    public List<HashMap<String, Object>> getmData() {
+        return mData;
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = super.onCreateView(inflater, container, savedInstanceState);
         firstLocation = true;
+        initData();
         initView();
         initListener();
         initService();
+        initAdapter();
         return view;
     }
+
+    private void initData() {
+        mData = new ArrayList<HashMap<String, Object>>();
+        try {
+            TestContact();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    private void initAdapter() {
+        mAdapter = new CallListAdapter(getContext());
+    }
+
 
     @Override
     public void onResume() {
@@ -137,18 +170,128 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
                 mTvPosition.setText(currentPosition);
                 break;
             case R.id.fb_add:
-                if (APP.getAllContact().size() < 4) {
-                    HelpContact contact = new HelpContact(getActivity());
-                    addContect(contact);
-                    APP.add(contact);
-                } else {
-                    Util.Toast(getActivity(), "人数已满");
-                    Log.e(TAG, "人数已经满了");
-                }
+                onCreateDialog(mAdapter);
+
                 break;
             default:
                 getActivity().startActivity(new Intent(getActivity(), ContactActivity.class).putExtra(API.KEY_CONTACT_NO, (long) v.getTag()));
                 break;
         }
     }
+
+
+    public void TestContact() throws Exception {
+        HashMap<String, Object> map = null;
+        Uri uri = Uri.parse("content://com.android.contacts/contacts");
+        ContentResolver resolver = getContext().getContentResolver();
+        Cursor cursor = resolver.query(uri, new String[]{"_id"}, null, null, null);
+        while (cursor.moveToNext()) {
+            map = new HashMap<String, Object>();
+            int contractID = cursor.getInt(0);
+            StringBuilder sb = new StringBuilder("contractID=");
+            sb.append(contractID);
+            uri = Uri.parse("content://com.android.contacts/contacts/" + contractID + "/data");
+            Cursor cursor1 = resolver.query(uri, new String[]{"mimetype", "data1", "data2"}, null, null, null);
+            while (cursor1.moveToNext()) {
+                String data1 = cursor1.getString(cursor1.getColumnIndex("data1"));
+                String mimeType = cursor1.getString(cursor1.getColumnIndex("mimetype"));
+                if ("vnd.android.cursor.item/name".equals(mimeType)) { //是姓名
+                    map.put("name", data1);
+                } else if ("vnd.android.cursor.item/phone_v2".equals(mimeType)) { //手机
+                    map.put("number", data1);
+                }
+
+            }
+            cursor1.close();
+            mData.add(map);
+        }
+        cursor.close();
+
+    }
+
+
+  /*  public Bitmap getHeadImg(String strPhoneNumber) {
+        Bitmap btContactImage = null;
+        Uri uriNumber2Contacts = Uri
+                .parse("content://com.android.contacts/"
+                        + "data/phones/filter/" + strPhoneNumber);
+        Cursor cursorCantacts = getContext()
+                .getContentResolver().query(uriNumber2Contacts, null, null,
+                        null, null);
+        if (cursorCantacts.getCount() > 0) {    //若游标不为0则说明有头像,游标指向第一条记录
+            cursorCantacts.moveToFirst();
+            Long contactID = cursorCantacts.getLong(cursorCantacts
+                    .getColumnIndex("contact_id"));
+            Uri uri = ContentUris.withAppendedId(
+                    ContactsContract.Contacts.CONTENT_URI, contactID);
+            InputStream input = ContactsContract.Contacts
+                    .openContactPhotoInputStream(getContext().getContentResolver(), uri);
+            btContactImage = BitmapFactory.decodeStream(input);
+            Log.i("info", "bt======" + btContactImage);
+
+        }
+        return btContactImage;
+    }
+*/
+
+    public void onCreateDialog(BaseAdapter adapter) {
+        DialogPlus dialog = DialogPlus.newDialog(getContext())
+                .setAdapter(adapter)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
+                        //getHeadImg(mData.get(position).get("number").toString())
+                        if (APP.getAllContact().size() < 4) {
+                            HelpContact contact = new HelpContact(getActivity(),mData.get(position).get("number").toString(),mData.get(position).get("name").toString());
+                            addContect(contact);
+                            APP.add(contact);
+                        } else {
+                            Util.Toast(getActivity(), "人数已满");
+                            Log.e(TAG, "人数已经满了");
+                        }
+                        dialog.dismiss();
+                    }
+                })
+                .setExpanded(true)// This will enable the expand feature, (similar to android L share dialog)
+                .create();
+        dialog.show();
+    }
+
+
+    class CallListAdapter extends BaseAdapter {
+
+        private LayoutInflater mInflater;// 动态布局映射
+
+        public CallListAdapter(Context context) {
+            this.mInflater = LayoutInflater.from(context);
+        }
+
+        // 决定ListView有几行可见
+        @Override
+        public int getCount() {
+            return mData.size();// ListView的条目数
+        }
+
+        @Override
+        public Object getItem(int arg0) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = mInflater.inflate(R.layout.friend_list_item, null);//根据布局文件实例化view
+            TextView title = (TextView) convertView.findViewById(R.id.tv_name);//找某个控件
+            title.setText(mData.get(position).get("name").toString());//给该控件设置数据(数据从集合类中来)
+            TextView time = (TextView) convertView.findViewById(R.id.tv_number);//找某个控件
+            time.setText(mData.get(position).get("number").toString());//给该控件设置数据(数据从集合类中来)
+            return convertView;
+        }
+    }
+
+
 }

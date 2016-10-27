@@ -21,9 +21,9 @@ public class HelpContact extends RealmObject{
     public HelpContact() {
     }
 
-    public HelpContact(Context context) {
-        this(getString(context, R.string.example_tel),
-                getString(context, R.string.example_name),
+    public HelpContact(Context context ,String name,String tel) {
+        this(tel,
+                name,
                 getString(context, R.string.example_sms),
                 true,
                 "",
