@@ -1,8 +1,6 @@
 package com.help.view;
 
-import android.app.Fragment;
 import android.content.ComponentName;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -10,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,17 +25,23 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
 import com.help.R;
 import com.help.config.IGetMapLocation;
+import com.help.model.bean.BmobLatLng;
 import com.help.model.bean.TestBmob;
 import com.help.service.LocationService;
+import com.help.util.Util;
 
-import cn.bmob.v3.Bmob;
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by gan on 2016/6/3.
@@ -50,6 +55,8 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
     private OnLocationChangedListener mListener;
     private ServiceConnection sc;
     private AMapLocation lastLocation;
+    public ArrayList<LatLng> latLngList;
+    private LocationService locationService;
 
     @Nullable
     @Override
@@ -64,21 +71,30 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
         mBtSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BmobUser bu = new BmobUser();
-                bu.setUsername("sendi");
-                bu.setPassword("123456");
-                bu.setEmail("sendi@163.com");
-//注意：不能用save方法进行注册
-                bu.signUp(new SaveListener<TestBmob>() {
-                    @Override
-                    public void done(TestBmob testBmob, BmobException e) {
-                        if (e == null) {
-                            Toast.makeText(getActivity(), "注册成功", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d("TAG", "wrong----" + e);
+                String IMEI = mEtSearch.getText().toString();
+                if (!TextUtils.isEmpty(IMEI)) {
+                    BmobQuery<BmobLatLng> queryLatLng = new BmobQuery<BmobLatLng>();
+                    queryLatLng.addWhereEqualTo("IMEI", Util.getIMEI(getActivity()));
+                    queryLatLng.findObjects(new FindListener<BmobLatLng>() {
+                        @Override
+                        public void done(List<BmobLatLng> list, BmobException e) {
+                            if (list.size() > 0) {
+                                BmobLatLng bmobLatLng = list.get(0);
+                                latLngList = (ArrayList<LatLng>) bmobLatLng.latLngList;
+                                if (locationService != null) {
+                                    locationService.stopSelf();
+                                }
+                                if (aMap != null) {
+                                    aMap.clear();
+                                    for (int i = 1; i < latLngList.size(); i++) {
+                                        aMap.addPolyline(new PolylineOptions().add(latLngList.get(i - 1), latLngList.get(i)));
+                                    }
+                                }
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }
         });
         return view;
@@ -89,6 +105,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
         aMap = mapView.getMap();
         setUpMap();
         setUpDot();
+
     }
 
     private void setUpDot() {
@@ -140,7 +157,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
         sc = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                LocationService locationService = ((LocationService.LocationBinder) service).getService();
+                locationService = ((LocationService.LocationBinder) service).getService();
                 locationService.initLocation(new IGetMapLocation() {
                     @Override
                     public void getLocationSuccess(AMapLocation amapLocation) {
@@ -152,8 +169,6 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
                                 lastLocation.getLongitude()), new LatLng(amapLocation.getLatitude(), amapLocation
                                 .getLongitude())));
                         lastLocation = amapLocation;
-                        Log.d("TAG", "amapLocation" + "La" + amapLocation.getLatitude() + "Long" + amapLocation
-                                .getLongitude());
                     }
                 });
             }

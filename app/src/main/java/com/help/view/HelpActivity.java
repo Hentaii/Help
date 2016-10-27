@@ -2,25 +2,42 @@ package com.help.view;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.PolylineOptions;
 import com.help.R;
 import com.help.api.API;
 import com.help.app.BaseActivity;
+import com.help.config.IGetMapLocation;
+import com.help.model.bean.BmobLatLng;
+import com.help.service.LocationService;
 import com.help.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class HelpActivity extends BaseActivity implements View.OnClickListener {
     private TextView mTvTabHelp;
@@ -33,6 +50,11 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     private Networkreceiver networkreceiver;
     private MyVolumeReceiver mVolumeReceiver;
     private AudioManager audioManager;
+    private ServiceConnection sc;
+    private String mIMEI;
+    private List<LatLng> mLatLingList = new ArrayList<>();
+    private BmobLatLng mBmobLatLng;
+
     private long clickTime = 0;
     private boolean flag = false;
     private int count = 0;
@@ -174,13 +196,59 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
             }
 
             if (flag && count == 6) {
-                Toast.makeText(context, "111111", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "按了六下", Toast.LENGTH_SHORT).show();
+                mIMEI = Util.getIMEI(HelpActivity.this);
+                mBmobLatLng = new BmobLatLng(mLatLingList, mIMEI);
+                mBmobLatLng.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        Log.d("TAG", "s-----" + s);
+                        initUpdateLocationService();
+                        if (null != e) {
+                            Log.d("TAG", "e-----" + e.getMessage());
+                        }
+                    }
+                });
             }
             clickTime = System.currentTimeMillis();
         }
     }
 
+    private void initUpdateLocationService() {
+        sc = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                LocationService locationService = ((LocationService.LocationBinder) service).getService();
+                locationService.setInterval(10000);
+                locationService.initLocation(new IGetMapLocation() {
+                    @Override
+                    public void getLocationSuccess(AMapLocation amapLocation) {
 
+                        if (null != amapLocation) {
+                            mBmobLatLng.latLngList.add(new LatLng(amapLocation.getLatitude(), amapLocation
+                                    .getLongitude()));
+                            Log.d("TAG", "location===>   " + amapLocation.getLatitude() + "------" + amapLocation
+                                    .getLongitude());
+                            mBmobLatLng.update(new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    Log.d("TAG", "update LatLngWrong ------ " + e.getMessage());
+                                }
+                            });
+                        }
+                    }
+
+                });
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                Log.d("TAG", "onServiceDisconnected  " + name.toShortString());
+            }
+        };
+        Intent service = new Intent(HelpActivity.this, LocationService.class);
+        bindService(service, sc, Context.BIND_AUTO_CREATE);
+    }
     /*@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {

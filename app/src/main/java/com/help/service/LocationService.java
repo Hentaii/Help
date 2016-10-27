@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,6 +24,8 @@ public class LocationService extends Service {
 
     //声明定位回调监听器
     public AMapLocationListener mLocationListener = null;
+
+    private int interval = 0;
 
 
     public LocationService() {
@@ -54,13 +57,21 @@ public class LocationService extends Service {
 //设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.setMockEnable(false);
 //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(2000);
+        if (interval <= 2000) {
+            mLocationOption.setInterval(2000);
+        } else {
+            mLocationOption.setInterval(interval);
+        }
 //给定位客户端对象设置定位参数
         mLocationOption.setNeedAddress(true);
         mLocationClient.setLocationOption(mLocationOption);
 
 //启动定位
         mLocationClient.startLocation();
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
     }
 
     @Override
