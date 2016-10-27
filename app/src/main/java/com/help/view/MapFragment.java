@@ -19,11 +19,15 @@ import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.PolylineOptions;
 import com.help.R;
@@ -57,6 +61,8 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
     private AMapLocation lastLocation;
     public ArrayList<LatLng> latLngList;
     private LocationService locationService;
+    public PolylineOptions polylineOptions;
+    private int mLineColor = 0xffFF3030;
 
     @Nullable
     @Override
@@ -79,15 +85,32 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
                         @Override
                         public void done(List<BmobLatLng> list, BmobException e) {
                             if (list.size() > 0) {
-                                BmobLatLng bmobLatLng = list.get(0);
+                                BmobLatLng bmobLatLng = list.get(list.size() - 1); //得到最新的一条
                                 latLngList = (ArrayList<LatLng>) bmobLatLng.latLngList;
                                 if (locationService != null) {
                                     locationService.stopSelf();
                                 }
                                 if (aMap != null) {
                                     aMap.clear();
-                                    for (int i = 1; i < latLngList.size(); i++) {
-                                        aMap.addPolyline(new PolylineOptions().add(latLngList.get(i - 1), latLngList.get(i)));
+                                    LatLng firstLatLng = latLngList.get(0);
+                                    final Marker marker = aMap.addMarker(new MarkerOptions().
+                                            position(firstLatLng).
+                                            snippet("DefaultMarker"));
+                                    if (latLngList.size() > 1) {
+                                        for (int i = 1; i < latLngList.size(); i++) {
+                                            aMap.addPolyline(new PolylineOptions().color(mLineColor).add(latLngList.get(i - 1), latLngList.get(i)));
+                                        }
+                                        aMap. animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(latLngList.get(0), 18, 0, 0)), 200, new AMap.CancelableCallback() {
+                                            @Override
+                                            public void onFinish() {
+                                                aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+                                            }
+
+                                            @Override
+                                            public void onCancel() {
+
+                                            }
+                                        });
                                     }
                                 }
                             }
@@ -103,10 +126,15 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
 
     private void init() {
         aMap = mapView.getMap();
+        polylineOptions = new PolylineOptions();
+        polylineOptions.visible(false);
+        if (((HelpActivity) getActivity()).flag) {
+            polylineOptions.visible(true);
+        }
         setUpMap();
         setUpDot();
-
     }
+
 
     private void setUpDot() {
         // 自定义系统定位蓝点
@@ -135,7 +163,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+
     }
 
     /**
@@ -154,6 +182,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
 
 
     private void initService(final OnLocationChangedListener mListener) {
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
         sc = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -165,7 +194,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
                         if (null == lastLocation) {
                             lastLocation = amapLocation;
                         }
-                        aMap.addPolyline(new PolylineOptions().add(new LatLng(lastLocation.getLatitude(),
+                        aMap.addPolyline(polylineOptions.color(mLineColor).add(new LatLng(lastLocation.getLatitude(),
                                 lastLocation.getLongitude()), new LatLng(amapLocation.getLatitude(), amapLocation
                                 .getLongitude())));
                         lastLocation = amapLocation;
@@ -194,6 +223,8 @@ public class MapFragment extends android.support.v4.app.Fragment implements Loca
     public void onResume() {
         super.onResume();
         mapView.onResume();
+
+
     }
 
     /**

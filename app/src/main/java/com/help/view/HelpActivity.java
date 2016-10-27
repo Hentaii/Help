@@ -57,7 +57,7 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     private BmobLatLng mBmobLatLng;
 
     private long clickTime = 0;
-    private boolean flag = false;
+    public boolean flag = false;
     private int count = 0;
 
     @Override
@@ -197,27 +197,33 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
             }
 
             if (flag && count == 6) {
-                Toast.makeText(context, "按了六下", Toast.LENGTH_SHORT).show();
-                for (int i = 0; i < mFgHelp.getmData().size(); i++) {
-                    sendSms(mFgHelp.getmData().get(i).get("number").toString(),"您好，我现在可能遇到了危险,现在不方便打电话，如果10分钟内我没联系你，请你帮助我！");
-                }
-                mIMEI = Util.getIMEI(HelpActivity.this);
-                mBmobLatLng = new BmobLatLng(mLatLingList, mIMEI);
-                mBmobLatLng.save(new SaveListener<String>() {
-                    @Override
-                    public void done(String s, BmobException e) {
-                        Log.d("TAG", "s-----" + s);
-                        initUpdateLocationService();
-                        if (null != e) {
-                            Log.d("TAG", "e-----" + e.getMessage());
-                        }
-                    }
-                });
+                SOS();
             }
             clickTime = System.currentTimeMillis();
         }
     }
 
+
+    private void SOS() {
+        if (mFgMap != null){
+            mFgMap.polylineOptions.visible(true);
+        }
+        for (int i = 0; i < mFgHelp.getmData().size(); i++) {
+            sendSms(mFgHelp.getmData().get(i).get("number").toString(), "您好，我现在可能遇到了危险,现在不方便打电话，如果10分钟内我没联系你，请你帮助我！");
+        }
+        mIMEI = Util.getIMEI(HelpActivity.this);
+        mBmobLatLng = new BmobLatLng(mLatLingList, mIMEI);
+        mBmobLatLng.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                Log.d("TAG", "s-----" + s);
+                initUpdateLocationService();
+                if (null != e) {
+                    Log.d("TAG", "e-----" + e.getMessage());
+                }
+            }
+        });
+    }
 
     private void sendSms(String phone, String message) {
 
