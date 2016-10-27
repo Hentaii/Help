@@ -1,10 +1,13 @@
 package com.help.view;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.help.R;
 import com.help.api.API;
@@ -27,6 +31,9 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     private ImageView mIvSet;
     private SharedPreferences sp;
     private Networkreceiver networkreceiver;
+    private MyVolumeReceiver mVolumeReceiver;
+    private AudioManager audioManager;
+    private long clickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +41,12 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
         initView();
         initFragment();
         registerReceiver();
+
+        myRegisterReceiver();
     }
+
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver();
     }
@@ -124,14 +134,54 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     }
     //动态注册网络的状态，绑定到networkreceiver
 
-    private  void registerReceiver(){
-        IntentFilter filter=new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        networkreceiver=new Networkreceiver();
+    private void registerReceiver() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        networkreceiver = new Networkreceiver();
         this.registerReceiver(networkreceiver, filter);
     }
+
     //注销接收
-    private  void unregisterReceiver(){
+    private void unregisterReceiver() {
         this.unregisterReceiver(networkreceiver);
     }
+
+
+    private void myRegisterReceiver() {
+        audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+        mVolumeReceiver = new MyVolumeReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.media.VOLUME_CHANGED_ACTION");
+        registerReceiver(mVolumeReceiver, filter);
+    }
+
+
+    private class MyVolumeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("android.media.VOLUME_CHANGED_ACTION")) {
+                clickTime = System.currentTimeMillis();
+                if ((System.currentTimeMillis() - clickTime) > 2000) {
+                    Toast.makeText(context, "11111", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+
+    /*@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                Toast.makeText(this,"11111",Toast.LENGTH_SHORT).show();
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                Toast.makeText(this,"22222",Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+    }*/
+
 }
 
