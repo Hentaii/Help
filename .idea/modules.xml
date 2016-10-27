@@ -5,8 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/Help.iml" filepath="$PROJECT_DIR$/Help.iml" />
       <module fileurl="file://$PROJECT_DIR$/Help-2.iml" filepath="$PROJECT_DIR$/Help-2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fab_library/fab_library.iml" filepath="$PROJECT_DIR$/fab_library/fab_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/fab_library/fab_library.iml" filepath="$PROJECT_DIR$/fab_library/fab_library.iml" />
     </modules>
   </component>
