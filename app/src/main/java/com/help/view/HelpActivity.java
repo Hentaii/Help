@@ -34,6 +34,8 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     private MyVolumeReceiver mVolumeReceiver;
     private AudioManager audioManager;
     private long clickTime = 0;
+    private boolean flag = false;
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,11 +161,22 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("android.media.VOLUME_CHANGED_ACTION")) {
-                clickTime = System.currentTimeMillis();
-                if ((System.currentTimeMillis() - clickTime) > 2000) {
-                    Toast.makeText(context, "11111", Toast.LENGTH_SHORT).show();
+
+                if ((System.currentTimeMillis() - clickTime) < 1000) {
+                    count++;
+                    if (count > 5) {
+                        flag = true;
+                    }
+                } else {
+                    count = 0;
+                    flag = false;
                 }
             }
+
+            if (flag && count == 6) {
+                Toast.makeText(context, "111111", Toast.LENGTH_SHORT).show();
+            }
+            clickTime = System.currentTimeMillis();
         }
     }
 
