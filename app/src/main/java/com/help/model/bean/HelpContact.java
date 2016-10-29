@@ -10,7 +10,7 @@ import io.realm.RealmObject;
 /**
  * Created by KiSoo on 2016/6/5.
  */
-public class HelpContact extends RealmObject{
+public class HelpContact extends RealmObject {
     public String tel;
     public String name;
     public String smsText;
@@ -21,7 +21,7 @@ public class HelpContact extends RealmObject{
     public HelpContact() {
     }
 
-    public HelpContact(Context context ,String name,String tel) {
+    public HelpContact(Context context, String tel, String name) {
         this(tel,
                 name,
                 getString(context, R.string.example_sms),
