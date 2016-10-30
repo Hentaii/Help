@@ -7,80 +7,90 @@
               android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/colorPrimary_Blue_4EA2F8"
-        android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimary_Blue_4EA2F8"
+            android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:gravity="center_vertical"
-            android:text="当前位置为："
-            android:textColor="@color/colorWhite_ffffff"
-            android:textSize="16sp"/>
-
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:text="当前位置为："
+                android:textColor="@color/colorWhite_ffffff"
+                android:textSize="16sp"/>
 
 
         <ImageView
-            android:id="@+id/iv_refresh"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:src="@mipmap/refresh"
-            />
+                android:id="@+id/iv_refresh"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/refresh"
+                />
 
         <TextView
-            android:layout_toLeftOf="@id/iv_refresh"
-            android:id="@+id/tv_positon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/text"
-            android:gravity="center_vertical"
-            android:text="千喜鹤"
-            android:textColor="@color/colorWhite_ffffff"
-            android:textSize="12sp"/>
+                android:id="@+id/tv_positon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@id/iv_refresh"
+                android:layout_toRightOf="@+id/text"
+                android:gravity="center_vertical"
+                android:text="当前位置暂无显示，请检查网络"
+                android:textColor="@color/colorWhite_ffffff"
+                android:textSize="12sp"/>
     </RelativeLayout>
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <com.help.widge.CircleButtonWithProgerss
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"/>
+                android:id="@+id/cbp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cbp"
+                android:text="推荐使用快捷求救\n在设置中可以开启"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="14dp"/>
 
         <com.github.clans.fab.FloatingActionMenu
-            android:id="@+id/fb_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            fab:fabSize="normal"
-            fab:menu_colorNormal="@color/colorPrimary_Blue_4EA2F8"
-            fab:menu_colorPressed="@color/colorPrimary"
-            fab:menu_colorRipple="#99FFFFFF"
-            fab:menu_icon="@mipmap/up">
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/fb_add"
+                android:id="@+id/fb_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/add"
-                fab:fab_colorNormal="@color/colorPrimary_Blue_4EA2F8"
-                fab:fab_colorPressed="@color/colorPrimary"
-                fab:fab_colorRipple="#99FFFFFF"
-                fab:fab_size="mini"/>
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                fab:fabSize="normal"
+                fab:menu_colorNormal="@color/colorPrimary_Blue_4EA2F8"
+                fab:menu_colorPressed="@color/colorPrimary"
+                fab:menu_colorRipple="#99FFFFFF"
+                fab:menu_icon="@mipmap/up">
+
+            <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fb_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/add"
+                    fab:fab_colorNormal="@color/colorPrimary_Blue_4EA2F8"
+                    fab:fab_colorPressed="@color/colorPrimary"
+                    fab:fab_colorRipple="#99FFFFFF"
+                    fab:fab_size="mini"/>
 
         </com.github.clans.fab.FloatingActionMenu>
 

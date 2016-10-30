@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.github.clans.fab.CircleImageView;
@@ -29,6 +30,7 @@ import com.help.config.IGetMapLocation;
 import com.help.model.bean.HelpContact;
 import com.help.service.LocationService;
 import com.help.util.Util;
+import com.help.widge.CircleButtonWithProgerss;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnItemClickListener;
 import com.squareup.picasso.Picasso;
@@ -55,11 +57,21 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
     static private boolean firstLocation = true;
     private CallListAdapter mAdapter;
     private List<HashMap<String, Object>> mData;
-
-    public List<HashMap<String, Object>> getmData() {
+    private CircleButtonWithProgerss mcbp;
+    private List<HelpContact> mList;
+   /* public List<HashMap<String, Object>> getmData() {
         return mData;
+    }*/
+
+    public HelpFragment() {
+
     }
 
+
+
+    public List<HelpContact> getmList() {
+        return mList;
+    }
 
     @Nullable
     @Override
@@ -75,7 +87,9 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void initData() {
+        Bundle args = getArguments();
         mData = new ArrayList<HashMap<String, Object>>();
+        mList = new ArrayList<>();
         try {
             TestContact();
         } catch (Exception e) {
@@ -83,6 +97,7 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
 
         }
     }
+
 
     private void initAdapter() {
         mAdapter = new CallListAdapter(getContext());
@@ -137,9 +152,11 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
     private void initListener() {
         mFbAdd.setOnClickListener(this);
         mIvRefresh.setOnClickListener(this);
+        mcbp.setOnClickListener(this);
     }
 
     private void initView() {
+        mcbp = (CircleButtonWithProgerss) view.findViewById(R.id.cbp);
         mFbMenu = (FloatingActionMenu) view.findViewById(R.id.fb_menu);
         mFbAdd = (FloatingActionButton) view.findViewById(R.id.fb_add);
         mTvPosition = (TextView) view.findViewById(R.id.tv_positon);
@@ -170,8 +187,13 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
                 mTvPosition.setText(currentPosition);
                 break;
             case R.id.fb_add:
+                initData();
                 onCreateDialog(mAdapter);
 
+                break;
+            case R.id.cbp:
+                Toast.makeText(getContext(), "开始呼救", Toast.LENGTH_SHORT).show();
+                ((HelpActivity)getActivity()).SOS();
                 break;
             default:
                 getActivity().startActivity(new Intent(getActivity(), ContactActivity.class).putExtra(API.KEY_CONTACT_NO, (long) v.getTag()));
@@ -242,9 +264,10 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
                     public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
                         //getHeadImg(mData.get(position).get("number").toString())
                         if (APP.getAllContact().size() < 4) {
-                            HelpContact contact = new HelpContact(getActivity(),mData.get(position).get("number").toString(),mData.get(position).get("name").toString());
+                            HelpContact contact = new HelpContact(getActivity(), mData.get(position).get("number").toString(), mData.get(position).get("name").toString());
                             addContect(contact);
                             APP.add(contact);
+                            mList.add(contact);
                         } else {
                             Util.Toast(getActivity(), "人数已满");
                             Log.e(TAG, "人数已经满了");

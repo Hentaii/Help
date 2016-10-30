@@ -1,5 +1,6 @@
 package com.help.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,16 +19,19 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private LinearLayout ll_back;
     private RelativeLayout rl_instruction;
-//    private RelativeLayout rl_share;
+    //    private RelativeLayout rl_share;
     private RelativeLayout rl_quick_help;
     private Switch sth_help;
-
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferences;
     private SettingActivityPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settting);
+        sharedPreferences = getSharedPreferences("isCheck", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         initView();
         initListener();
         presenter = new SettingActivityPresenter(this, this);
@@ -44,6 +48,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         ll_back = (LinearLayout) findViewById(R.id.ll_back);
         rl_quick_help = (RelativeLayout) findViewById(R.id.rl_quick_help);
         sth_help = (Switch) findViewById(R.id.sth_help);
+        setCheck(getIsChecked());
         rl_instruction = (RelativeLayout) findViewById(R.id.rl_instruction);
 //        rl_share = (RelativeLayout) findViewById(R.id.rl_share);
     }
@@ -68,11 +73,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public boolean getIsChecked() {
-        return sth_help.isChecked();
+        return sharedPreferences.getBoolean("isCheck",false);
     }
 
     @Override
     public void setCheck(boolean check) {
+        editor.putBoolean("isCheck", check);
+        editor.commit();
         sth_help.setChecked(check);
     }
 }

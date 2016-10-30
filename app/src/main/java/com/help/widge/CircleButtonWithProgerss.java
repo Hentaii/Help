@@ -4,13 +4,10 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -79,7 +76,7 @@ public class CircleButtonWithProgerss extends View {
         textPaint.setTextAlign(Paint.Align.LEFT);
         textPaint.setTextSize(mTextSize);
 
-        mText = "紧急呼救";
+        mText = "点击呼救";
         mSweepAngle = 0;
 
         anim = new BarAnimation();
@@ -113,7 +110,7 @@ public class CircleButtonWithProgerss extends View {
         super.onDraw(canvas);
     }
 
-    @Override
+   /* @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -131,7 +128,7 @@ public class CircleButtonWithProgerss extends View {
                 break;
         }
         return true;
-    }
+    }*/
 
     public void startCustomAnimation() {
         this.startAnimation(anim);

@@ -11,7 +11,7 @@
     <string name="ues_help_5">表明可以向该联系人拨打电话并发送求救短信</string>
     <string name="ues_help_6">普通求救:长按该按钮1秒可以开始求救</string>
     <string name="ues_help_7">遇到危险快速求救</string>
-    <string name="ues_help_8">遇到危险时，连续多次按下电源键(至少六次)知道手机震动，即可快速求救。请确保新号通畅且不欠费。</string>
+    <string name="ues_help_8">遇到危险时，连续多次按下音量键(至少六次)知道手机震动，即可快速求救。请确保新号通畅且不欠费。</string>
     <string name="ues_help_9">GPS获取当前位置+求助信息+IMEI码</string>
     <string name="ues_help_10">发出的求救信息由三部分组成，分为用户设置的求救信息+当前位置+IMEI码，联系人可以通过获取的IMIE码在该app中获取求救者求救后的运动轨迹</string>
     <string name="ues_help_11">全民参与周边救援</string>
@@ -37,4 +37,5 @@
     <string name="delete">删除</string>
     <string name="key_kisoo">f872c1636edbccc095129fb09bb20432</string>
     <string name="key_gan">887409363d256da6a39fa07c2d316909</string>
+    <string name="key_yu">66cf1a94b6ec788fcbe0d9b2ff9797fe</string>
 </resources>

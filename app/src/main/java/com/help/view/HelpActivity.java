@@ -40,7 +40,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-public class HelpActivity extends BaseActivity implements View.OnClickListener {
+public class HelpActivity extends BaseActivity implements View.OnClickListener{
     private TextView mTvTabHelp;
     private TextView mTvTabMap;
     private HelpFragment mFgHelp;
@@ -55,6 +55,7 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     private String mIMEI;
     private List<LatLng> mLatLingList = new ArrayList<>();
     private BmobLatLng mBmobLatLng;
+    private boolean isQuickSOS;
 
     private long clickTime = 0;
     public boolean flag = false;
@@ -70,6 +71,11 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
         myRegisterReceiver();
     }
 
+    private void initData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("isCheck", MODE_PRIVATE);
+        isQuickSOS = sharedPreferences.getBoolean("isCheck", false);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -79,7 +85,7 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     private void initFragment() {
         mFgHelp = new HelpFragment();
         mFgMap = new MapFragment();
-        showFragment(mFgHelp);
+        showFragment(mFgMap);
     }
 
     private void initView() {
@@ -180,6 +186,9 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
+
+
+
     private class MyVolumeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -197,21 +206,29 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
             }
 
             if (flag && count == 6) {
-                SOS();
+                initData();
+                if (isQuickSOS) {
+                    Toast.makeText(context, "开始呼救", Toast.LENGTH_SHORT).show();
+                    SOS();
+                } else {
+                    Toast.makeText(context, "你还没有开启快捷求救，请在设置中开启快捷求救", Toast.LENGTH_SHORT).show();
+                }
             }
             clickTime = System.currentTimeMillis();
         }
     }
 
 
-    private void SOS() {
-        if (mFgMap != null){
+    public void SOS() {
+        mIMEI = Util.getIMEI(HelpActivity.this);
+        if (mFgMap != null) {
             mFgMap.polylineOptions.visible(true);
         }
-        for (int i = 0; i < mFgHelp.getmData().size(); i++) {
-            sendSms(mFgHelp.getmData().get(i).get("number").toString(), "您好，我现在可能遇到了危险,现在不方便打电话，如果10分钟内我没联系你，请你帮助我！");
+        for (int i = 0; i < mFgHelp.getmList().size(); i++) {
+
+            sendSms(mFgHelp.getmList().get(i).getTel(), mFgHelp.getmList().get(i).getName() + "您好" + mFgHelp.getmList().get(i).getSmsText() + "我的IMEI码是" + mIMEI + "下载云互助app可以查询帮助我！" + "     " + mFgHelp.getmList().get(i).getContactNo());
         }
-        mIMEI = Util.getIMEI(HelpActivity.this);
+
         mBmobLatLng = new BmobLatLng(mLatLingList, mIMEI);
         mBmobLatLng.save(new SaveListener<String>() {
             @Override
