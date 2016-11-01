@@ -210,6 +210,9 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener{
                 if (isQuickSOS) {
                     Toast.makeText(context, "开始呼救", Toast.LENGTH_SHORT).show();
                     SOS();
+                    for (int i = 0; i < mFgHelp.getmList().size(); i++) {
+                        sendSms(mFgHelp.getmList().get(i).getTel(), mFgHelp.getmList().get(i).getName() + mFgHelp.getmList().get(i).getSmsText() + "我的IMEI码是" + mIMEI + "下载云互助app可以查询帮助我！" + "     " + mFgHelp.getmList().get(i).getContactNo());
+                    }
                 } else {
                     Toast.makeText(context, "你还没有开启快捷求救，请在设置中开启快捷求救", Toast.LENGTH_SHORT).show();
                 }
@@ -224,10 +227,7 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener{
         if (mFgMap != null) {
             mFgMap.polylineOptions.visible(true);
         }
-        for (int i = 0; i < mFgHelp.getmList().size(); i++) {
 
-            sendSms(mFgHelp.getmList().get(i).getTel(), mFgHelp.getmList().get(i).getName() + "您好" + mFgHelp.getmList().get(i).getSmsText() + "我的IMEI码是" + mIMEI + "下载云互助app可以查询帮助我！" + "     " + mFgHelp.getmList().get(i).getContactNo());
-        }
 
         mBmobLatLng = new BmobLatLng(mLatLingList, mIMEI);
         mBmobLatLng.save(new SaveListener<String>() {
@@ -242,13 +242,23 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener{
         });
     }
 
-    private void sendSms(String phone, String message) {
+    public void sendSms(String phone, String message) {
 
         PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, HelpActivity.class), 0);
 
         SmsManager sms = SmsManager.getDefault();
 
-        sms.sendTextMessage(phone, null, message, pi, null);
+        if (message.length() > 70) {
+            ArrayList<String> msgs = sms.divideMessage(message);
+            for (String msg : msgs) {
+                if (msg != null) {
+                    sms.sendTextMessage(phone, null, msg, pi,
+                            null);
+                }
+            }
+        } else {
+            sms.sendTextMessage(phone, null, message, pi, null);
+        }
 
     }
 

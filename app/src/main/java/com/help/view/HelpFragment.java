@@ -115,6 +115,7 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
         mFbMenu.removeAllMenuButtons(R.id.fb_add);
         for (HelpContact contact : contacts) {
             addContect(contact);
+            mList.add(contact);
         }
     }
 
@@ -194,6 +195,9 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
             case R.id.cbp:
                 Toast.makeText(getContext(), "开始呼救", Toast.LENGTH_SHORT).show();
                 ((HelpActivity)getActivity()).SOS();
+                for (int i = 0; i < getmList().size(); i++) {
+                    ((HelpActivity)getActivity()).sendSms(getmList().get(i).getTel(), getmList().get(i).getName() + getmList().get(i).getSmsText() + "我的IMEI码是" + Util.getIMEI(getContext()) + "下载云互助app可以查询帮助我！" + "     " + getmList().get(i).getContactNo());
+                }
                 break;
             default:
                 getActivity().startActivity(new Intent(getActivity(), ContactActivity.class).putExtra(API.KEY_CONTACT_NO, (long) v.getTag()));
