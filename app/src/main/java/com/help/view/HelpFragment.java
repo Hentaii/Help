@@ -311,7 +311,9 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
             TextView title = (TextView) convertView.findViewById(R.id.tv_name);//找某个控件
             title.setText(mData.get(position).get("name").toString());//给该控件设置数据(数据从集合类中来)
             TextView time = (TextView) convertView.findViewById(R.id.tv_number);//找某个控件
-            time.setText(mData.get(position).get("number").toString());//给该控件设置数据(数据从集合类中来)
+            if (mData.get(position).get("number").toString()!=null){
+                time.setText(mData.get(position).get("number").toString());//给该控件设置数据(数据从集合类中来)
+            }
             return convertView;
         }
     }
